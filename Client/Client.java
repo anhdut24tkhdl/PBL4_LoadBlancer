@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Client {
     private static final String GATEWAY_HOST = "localhost";
-    private static final int GATEWAY_PORT = 5000;
+    private static final int GATEWAY_PORT = 6000;
 
     public void connectToGateway() {
         try {

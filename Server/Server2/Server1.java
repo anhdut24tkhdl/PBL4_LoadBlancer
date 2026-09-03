@@ -1,4 +1,4 @@
-package Server.Server2;
+package com.mycompany.server;
 
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -9,9 +9,9 @@ import java.util.concurrent.Executors;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
-public class Server {
+public class Server1 {
     private static final int Port = 5002;
-    private static final int PortMonitor = 5003;
+    private static final int PortMonitor = 4999;
     ExecutorService threadPool = Executors.newFixedThreadPool(20);
     ServerSocket serverSocket = null;
 
@@ -31,9 +31,15 @@ public class Server {
                 threadPool.submit(() -> {
                     while (true) {
                         try {
-                            String message;
-                            message = monitor.printCurrentUsage();
-                            writer.println("Server 1 : " + message);
+
+                            SystemMonitor.Metrics metrics = monitor.getCurrentMetrics();
+                            String message = "";
+                            double cpu = metrics.cpuPercent();
+                            double ram = metrics.ramPercent();
+                            double download = metrics.downloadMbps();
+                            double upload = metrics.uploadMbps();
+                            message = "server 2 : " + cpu + " " + ram + " " + download + " " + upload;
+                            writer.println(message);
                             System.out.println(message);
                             Thread.sleep(10000);
                         } catch (Exception e) {
@@ -54,7 +60,7 @@ public class Server {
 
     public static void main(String[] args) {
         SystemMonitor monitor = new SystemMonitor();
-        Server sv = new Server();
+        Server1 sv = new Server1();
         sv.connection(monitor);
 
     }

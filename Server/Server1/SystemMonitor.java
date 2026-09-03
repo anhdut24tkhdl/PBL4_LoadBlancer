@@ -1,6 +1,5 @@
-package Server.Server1;
+package com.mycompany.server;
 
-import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,6 @@ public class SystemMonitor {
         previousCpuTicks = cpu.getSystemCpuLoadTicks();
         previousTime = System.nanoTime();
 
-        // Lưu số byte mạng ban đầu
         for (NetworkIF network : networkList) {
             network.updateAttributes();
 
@@ -48,57 +46,51 @@ public class SystemMonitor {
         }
     }
 
-    public String printCurrentUsage() {
+    public synchronized Metrics getCurrentMetrics() {
         long currentTime = System.nanoTime();
 
         double elapsedSeconds = (currentTime - previousTime) / 1_000_000_000.0;
 
         if (elapsedSeconds <= 0) {
-            return "";
+            return new Metrics(0, 0, 0, 0);
         }
 
-        /*
-         * CPU toàn máy
-         */
-        double cpuPercent = cpu.getSystemCpuLoadBetweenTicks(previousCpuTicks) * 100;
+        // CPU %
+        double cpuPercent = cpu.getSystemCpuLoadBetweenTicks(previousCpuTicks) * 100.0;
 
         previousCpuTicks = cpu.getSystemCpuLoadTicks();
 
-        /*
-         * RAM
-         */
+        // RAM %
         long totalRam = memory.getTotal();
         long availableRam = memory.getAvailable();
         long usedRam = totalRam - availableRam;
 
-        double ramPercent = (double) usedRam / totalRam * 100;
+        double ramPercent = totalRam == 0
+                ? 0
+                : usedRam * 100.0 / totalRam;
 
-        double usedRamGB = usedRam / 1024.0 / 1024 / 1024;
-
-        double totalRamGB = totalRam / 1024.0 / 1024 / 1024;
-
-        /*
-         * Tốc độ mạng
-         */
+        // Tốc độ mạng
         long receivedBytes = 0;
         long sentBytes = 0;
 
         for (NetworkIF network : networkList) {
+            network.updateAttributes();
+
             if (!isUsableNetwork(network)) {
                 continue;
             }
 
-            network.updateAttributes();
+            String networkName = network.getName();
 
             long currentReceived = network.getBytesRecv();
             long currentSent = network.getBytesSent();
 
             long oldReceived = previousReceived.getOrDefault(
-                    network.getName(),
+                    networkName,
                     currentReceived);
 
             long oldSent = previousSent.getOrDefault(
-                    network.getName(),
+                    networkName,
                     currentSent);
 
             long receivedDifference = currentReceived - oldReceived;
@@ -112,57 +104,41 @@ public class SystemMonitor {
                 sentBytes += sentDifference;
             }
 
-            previousReceived.put(
-                    network.getName(),
-                    currentReceived);
-
-            previousSent.put(
-                    network.getName(),
-                    currentSent);
+            previousReceived.put(networkName, currentReceived);
+            previousSent.put(networkName, currentSent);
         }
 
-        // Chuyển số byte/giây thành megabit/giây
-        double downloadMbps = receivedBytes * 8.0 / elapsedSeconds / 1_000_000;
+        // Đổi byte/giây thành megabit/giây
+        double downloadMbps = receivedBytes * 8.0 / elapsedSeconds / 1_000_000.0;
 
-        double uploadMbps = sentBytes * 8.0 / elapsedSeconds / 1_000_000;
+        double uploadMbps = sentBytes * 8.0 / elapsedSeconds / 1_000_000.0;
 
         previousTime = currentTime;
 
-        /*
-         * Hiển thị kết quả
-         */
-        String message = "";
-        // System.out.printf("CPU đang dùng: %.2f%%%n", cpuPercent);
-        message += cpuPercent + " ";
-        //
-        // System.out.printf(
-        // "RAM đang dùng: %.2f%% (%.2f/%.2f GB)%n",
-        // ramPercent,
-        // usedRamGB,
-        // totalRamGB
-        // );
-        message += (usedRamGB + " ");
-
-        // System.out.printf(
-        // "Download hiện tại: %.3f Mbps%n",
-        // downloadMbps
-        // );
-        message += (downloadMbps + " ");
-
-        // System.out.printf(
-        // "Upload hiện tại: %.3f Mbps%n",
-        // uploadMbps
-        // );
-        message += uploadMbps + " ";
-
-        // System.out.println("--------------------------------");
-        return message;
+        return new Metrics(
+                normalizePercent(cpuPercent),
+                normalizePercent(ramPercent),
+                Math.max(downloadMbps, 0),
+                Math.max(uploadMbps, 0));
     }
 
     private boolean isUsableNetwork(NetworkIF network) {
-        network.updateAttributes();
-
         return network.getIfOperStatus() == NetworkIF.IfOperStatus.UP
                 && network.getIfType() != 24;
+    }
+
+    private double normalizePercent(double value) {
+        if (Double.isNaN(value) || value < 0) {
+            return 0;
+        }
+
+        return Math.min(value, 100);
+    }
+
+    public record Metrics(
+            double cpuPercent,
+            double ramPercent,
+            double downloadMbps,
+            double uploadMbps) {
     }
 }
