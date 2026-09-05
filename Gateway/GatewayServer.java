@@ -1,61 +1,73 @@
 package Gateway;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import Gateway.api.DashboardApiServer;
+import Gateway.forwarding.RequestForwarder;
+import Gateway.handler.ClientHandler;
+import Gateway.loadbalancer.DynamicLoadBalancer;
+import Gateway.loadbalancer.LoadBalancer;
+import Gateway.model.BackendServer;
+import Gateway.monitoring.HealthMonitor;
+import Gateway.registry.ServerRegistry;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import Gateway.handler.ClientHandler;
-
 public class GatewayServer {
-    // private static final int PORT = 5000;
-    ExecutorService threadPool = Executors.newFixedThreadPool(20);
-    ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(2);
+    private static final int GATEWAY_PORT = 5000;
 
-    public void connectToServer(int Port) {
-        try (
-                Socket socket = new Socket("localhost", Port);
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(socket.getInputStream()))) {
-            System.out.println("Đã kết nối tới Server");
+    private final ExecutorService requestPool = Executors.newFixedThreadPool(20);
 
-            String response;
+    private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
 
-            while ((response = reader.readLine()) != null) {
-                System.out.println("Server: " + response);
-            }
+    public void start() {
+        ServerRegistry registry = new ServerRegistry();
 
-            System.out.println("Server đã ngắt kết nối");
+        registry.addServer(new BackendServer("Server 1", "localhost", 5001));
+        registry.addServer(new BackendServer("Server 2", "localhost", 5003));
+        registry.addServer(new BackendServer("Server 3", "localhost", 5002));
+
+        LoadBalancer loadBalancer = new DynamicLoadBalancer(registry);
+
+        RequestForwarder forwarder = new RequestForwarder();
+
+        HealthMonitor healthMonitor = new HealthMonitor(registry);
+
+        healthMonitor.start(monitorPool);
+        DashboardApiServer dashboardApi = new DashboardApiServer(registry);
+        try {
+            dashboardApi.start();
 
         } catch (Exception e) {
-            // Phải in lỗi để biết kết nối thất bại ở đâu
             e.printStackTrace();
         }
-    }
 
-    public void test(ClientHandler client) {
-        threadPool.execute(client);
+        try (ServerSocket serverSocket = new ServerSocket(GATEWAY_PORT)) {
 
+            System.out.println(
+                    "Gateway đang chạy tại port " + GATEWAY_PORT);
+
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+
+                requestPool.execute(
+                        new ClientHandler(
+                                clientSocket,
+                                loadBalancer,
+                                forwarder));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            requestPool.shutdown();
+            monitorPool.shutdown();
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            GatewayServer gw = new GatewayServer();
-            ServerSocket server = new ServerSocket(6000);
-            System.out.print("tao in o day");
-
-            while (true) {
-                Socket client = server.accept();
-                System.out.print("tao in o day");
-                gw.test(new ClientHandler(client));
-            }
-
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-
+        new GatewayServer().start();
     }
 }

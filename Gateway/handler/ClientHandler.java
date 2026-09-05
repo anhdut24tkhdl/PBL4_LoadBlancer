@@ -1,49 +1,64 @@
 package Gateway.handler;
 
+import Gateway.forwarding.RequestForwarder;
+import Gateway.loadbalancer.LoadBalancer;
+import Gateway.model.BackendServer;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Random;
 
-public class ClientHandler extends Thread {
-    private Socket clientSocket;
+public class ClientHandler implements Runnable {
+    private final Socket clientSocket;
+    private final LoadBalancer loadBalancer;
+    private final RequestForwarder forwarder;
 
-    public ClientHandler(Socket clientSocket)
-
-    {
+    public ClientHandler(
+            Socket clientSocket,
+            LoadBalancer loadBalancer,
+            RequestForwarder forwarder) {
         this.clientSocket = clientSocket;
-
+        this.loadBalancer = loadBalancer;
+        this.forwarder = forwarder;
     }
 
     @Override
     public void run() {
+        try (
 
-        try {
-            Random ramdom = new Random();
-            int port = ramdom.nextBoolean() ? 5001 : 5002;
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(this.clientSocket.getInputStream()));
+                PrintWriter writer = new PrintWriter(
+                        this.clientSocket.getOutputStream(), true)) {
+            String request = reader.readLine();
 
-            String message;
-            Socket socket = new Socket("localhost", port);
+            if (request == null) {
+                return;
+            }
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            PrintWriter writer = new PrintWriter(
+            BackendServer backend = loadBalancer.selectServer();
 
-                    clientSocket.getOutputStream(), true);
+            if (backend == null) {
+                writer.println("ERROR: Không có server khả dụng");
+                return;
+            }
 
-            while (true) {
-                while ((message = reader.readLine()) != null) {
-                    System.out.println(message);
-                    writer.println(message);
-                }
+            backend.increaseConnections();
 
+            try {
+
+                String response = forwarder.forward(backend, request);
+
+                writer.println(response);
+
+            } finally {
+                backend.decreaseConnections();
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(
+                    "Lỗi xử lý client: " + e.getMessage());
         }
-
     }
-
 }

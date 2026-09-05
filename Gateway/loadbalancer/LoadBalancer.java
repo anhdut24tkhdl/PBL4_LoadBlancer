@@ -1,5 +1,7 @@
 package Gateway.loadbalancer;
 
-public class LoadBalancer {
+import Gateway.model.BackendServer;
 
+public interface LoadBalancer {
+    BackendServer selectServer();
 }

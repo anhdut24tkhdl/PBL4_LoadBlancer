@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Load Balancer Dashboard</title>
+  <style>
+    :root { color-scheme: dark; --panel: #172036; --bg: #0b1020; --line: #2a3654; --muted: #9ba9c7; --green: #38d996; --red: #ff687a; --blue: #65a9ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: var(--bg); color: #f5f7ff; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px max(24px, calc((100% - 1040px) / 2)); border-bottom: 1px solid var(--line); }
+    h1 { margin: 0; font-size: 25px; }
+    .sub { margin: 7px 0 0; color: var(--muted); }
+    button { border: 1px solid #4f78c8; border-radius: 8px; padding: 10px 14px; background: #1a315e; color: white; cursor: pointer; }
+    main { max-width: 1040px; margin: 0 auto; padding: 28px 24px; }
+    .summary, #server-list { display: grid; gap: 16px; }
+    .summary { grid-template-columns: repeat(3, 1fr); margin-bottom: 24px; }
+    .summary > div, .server { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+    .summary > div { padding: 16px; }
+    .label { color: var(--muted); font-size: 13px; }
+    .number { margin-top: 6px; font-size: 25px; font-weight: bold; }
+    #server-list { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .server { padding: 18px; }
+    .server-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .server h2 { margin: 0; font-size: 19px; }
+    .status { padding: 5px 9px; border-radius: 99px; font-weight: bold; font-size: 12px; }
+    .up { background: #123e31; color: var(--green); }
+    .down { background: #4b1e2a; color: var(--red); }
+    .metric { display: grid; grid-template-columns: 95px 1fr 58px; align-items: center; gap: 10px; margin: 12px 0; color: var(--muted); font-size: 14px; }
+    .metric strong { color: #f5f7ff; text-align: right; }
+    .bar { height: 9px; overflow: hidden; background: #0c1325; border-radius: 999px; }
+    .bar > i { display: block; height: 100%; background: var(--blue); border-radius: inherit; }
+    .down-card { opacity: .62; }
+    footer { max-width: 1040px; margin: 0 auto; padding: 0 24px 28px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 640px) { header { align-items: flex-start; flex-direction: column; } .summary { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Load Balancer Dashboard</h1>
+      <p class="sub">Theo dõi trạng thái và tải của các Backend Server</p>
+    </div>
+    <button onclick="renderServers()">Làm mới giao diện</button>
+  </header>
+
+  <main>
+    <section class="summary">
+      <div><div class="label">Backend đang hoạt động</div><div class="number" id="up-count">0</div></div>
+      <div><div class="label">Tổng kết nối đang xử lý</div><div class="number" id="connection-count">0</div></div>
+      <div><div class="label">Cập nhật lúc</div><div class="number" id="updated-at">--:--:--</div></div>
+    </section>
+
+    <section id="server-list"></section>
+  </main>
+
+ 
+
+  <script>
+    
+    let servers = [
+      { name: 'Server 1', host: 'localhost:5001', alive: true, cpu: 25.5, ram: 61.2, latency: 8.4, connections: 3 },
+      { name: 'Server 2', host: 'localhost:5003', alive: true, cpu: 42.1, ram: 55.7, latency: 12.6, connections: 1 }
+    ];
+
+    const percent = value => Math.max(0, Math.min(100, value));
+
+    function metric(label, value, width) {
+      return `<div class="metric"><span>${label}</span><div class="bar"><i style="width:${percent(width)}%"></i></div><strong>${value}</strong></div>`;
+    }
+
+    function renderServers() {
+      const upServers = servers.filter(server => server.alive);
+      document.getElementById('up-count').textContent = `${upServers.length}/${servers.length}`;
+      document.getElementById('connection-count').textContent = servers.reduce((sum, server) => sum + server.connections, 0);
+      document.getElementById('updated-at').textContent = new Date().toLocaleTimeString('vi-VN');
+
+      document.getElementById('server-list').innerHTML = servers.map(server => `
+        <article class="server ${server.alive ? '' : 'down-card'}">
+          <div class="server-top">
+            <div><h2>${server.name}</h2><span class="label">${server.host}</span></div>
+            <span class="status ${server.alive ? 'up' : 'down'}">${server.alive ? 'UP' : 'DOWN'}</span>
+          </div>
+          ${metric('CPU', `${server.cpu.toFixed(1)}%`, server.cpu)}
+          ${metric('RAM', `${server.ram.toFixed(1)}%`, server.ram)}
+          ${metric('Latency', `${server.latency.toFixed(1)} ms`, server.latency / 2)}
+          ${metric('Kết nối', String(server.connections), server.connections * 10)}
+        </article>
+      `).join('');
+    }
+
+    // Gateway hoặc API sau này có thể gọi hàm này bằng dữ liệu thật.
+    function updateServerMetrics(newServers) {
+      servers = newServers;
+      renderServers();
+    }
+
+    renderServers();
+    async function loadMetricsFromGateway() {
+    try {
+        const response = await fetch(
+            "http://localhost:5005/api/servers"
+        );
+
+        if (!response.ok) {
+            throw new Error("Không lấy được dữ liệu Gateway");
+        }
+
+        const data = await response.json();
+
+        updateServerMetrics(data);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+loadMetricsFromGateway();
+
+setInterval(loadMetricsFromGateway, 5000);
+  </script>
+</body>
+</html>

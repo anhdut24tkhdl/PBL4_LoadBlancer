@@ -1,23 +1,42 @@
 package Gateway.loadbalancer;
 
-import java.net.Socket;
+import Gateway.model.BackendServer;
+import Gateway.model.ServerMetrics;
+import Gateway.registry.ServerRegistry;
 
-import Gateway.GetMonitor;
+public class DynamicLoadBalancer implements LoadBalancer {
+    private final ServerRegistry registry;
 
-public class DynamicLoadBalancer {
-
-    public int getPortServer(Socket server1, Socket server2) {
-        GetMonitor getMonitor = new GetMonitor(server1);
-        GetMonitor getMonitor1 = new GetMonitor(server2);
-        GetMonitor.Metrics metrics = getMonitor.getMetrics();
-        GetMonitor.Metrics metrics1 = getMonitor1.getMetrics();
-
-        if (0.35 * metrics.cpuPercent() + 0.3 * metrics.ramPercent() > 0.35 * metrics1.cpuPercent()
-                + 0.3 * metrics1.ramPercent()) {
-            return server2.getPort();
-        } else
-            return server1.getPort();
-
+    public DynamicLoadBalancer(ServerRegistry registry) {
+        this.registry = registry;
     }
 
+    @Override
+    public BackendServer selectServer() {
+        BackendServer selectedServer = null;
+        double lowestScore = Double.MAX_VALUE;
+
+        for (BackendServer server : registry.getServers()) {
+
+            if (!server.isAlive()) {
+
+                continue;
+            }
+
+            ServerMetrics metrics = server.getMetrics();
+
+            double score = 0.35 * metrics.getCpuUsage()
+                    + 0.30 * metrics.getRamUsage()
+                    + 0.20 * metrics.getLatency()
+                    + 0.15 * server.getActiveConnections();
+
+            if (score < lowestScore) {
+                lowestScore = score;
+                selectedServer = server;
+
+            }
+        }
+
+        return selectedServer;
+    }
 }
