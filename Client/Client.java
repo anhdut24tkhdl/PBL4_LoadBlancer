@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import Gateway.protocol.Request;
+import Gateway.protocol.Response;
+
 public class Client {
     private static final String GATEWAY_HOST = "localhost";
     private static final int GATEWAY_PORT = 5000;
@@ -26,18 +29,20 @@ public class Client {
 
         {
 
-            String request = "PING";
+            // String request = "PING";
 
-            writer.println(request);
+            // writer.println(request);
+            Request req=new Request("PING", "Client test load banlance");
+            writer.println(req.serialize());
 
-            String response = reader.readLine();
+            Response res=Response.parse(reader.readLine());
 
-            if (response == null) {
+            if (res == null) {
                 System.out.println("Gateway đã đóng kết nối.");
 
             }
 
-            System.out.println("Response: " + response);
+            System.out.println("Kết quả từ " + res.getServerName() + " (Mã " + res.getStatusCode() + "): " + res.getMessage());
 
         } catch (Exception e) {
             System.out.println("Không thể kết nối Gateway");

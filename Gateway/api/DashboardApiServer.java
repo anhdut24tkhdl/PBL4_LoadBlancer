@@ -15,14 +15,17 @@ import java.util.concurrent.Executors;
 public class DashboardApiServer {
     private final ServerRegistry registry;
     private HttpServer httpServer;
+    private final int dashboardPort;
 
-    public DashboardApiServer(ServerRegistry registry) {
+
+    public DashboardApiServer(ServerRegistry registry, int dashboardPort) {
         this.registry = registry;
+        this.dashboardPort=dashboardPort;
     }
 
     public void start() throws IOException {
         httpServer = HttpServer.create(
-                new InetSocketAddress(5005),
+                new InetSocketAddress(this.dashboardPort),
                 0);
 
         httpServer.createContext(

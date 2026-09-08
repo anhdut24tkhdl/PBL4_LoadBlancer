@@ -1,18 +1,24 @@
-package Server.Server2;
+package Server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Gateway.protocol.Request;
+import Gateway.protocol.Response;
+
 public class RequestHandler implements Runnable {
     private final Socket clientSocket;
+    private final String serverName;
     private final SystemMonitor systemMonitor;
 
     public RequestHandler(
             Socket clientSocket,
+            String serverName,
             SystemMonitor systemMonitor) {
         this.clientSocket = clientSocket;
+        this.serverName = serverName;
         this.systemMonitor = systemMonitor;
     }
 
@@ -29,38 +35,38 @@ public class RequestHandler implements Runnable {
                 PrintWriter writer = new PrintWriter(
                         socket.getOutputStream(), true)) {
 
-            String request = reader.readLine();
+            Request request = Request.parse(reader.readLine());
 
             if (request == null) {
                 return;
             }
 
-            if ("METRICS".equalsIgnoreCase(request.trim())) {
+            if ("METRICS".equals(request.getCommand())) {
                 // Phản hồi cho Gateway HealthMonitor
                 SystemMonitor.Metrics metrics = systemMonitor.getCurrentMetrics();
                 String metricsResponse = metrics.cpuPercent() + " " + metrics.ramPercent();
                 writer.println(metricsResponse);
             } else {
                 // Xử lý request từ Gateway / Client
-                System.out.println("[Server 2] Nhận request: '" + request + "' từ " + clientAddress);
+                System.out.println("[" + serverName + "] Nhận request: '" + request + "' từ " + clientAddress);
 
-                // Giả lập thời gian tính toán tải (mặc định 150ms)
+                // Giả lập thời gian xử lý (200ms)
                 long startTime = System.currentTimeMillis();
                 try {
-                    Thread.sleep(150);
+                    Thread.sleep(200);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
                 long duration = System.currentTimeMillis() - startTime;
 
-                String response = "Server 2 (Port 5002): Đã xử lý thành công request [" + request + "] (" + duration + "ms)";
-                writer.println(response);
+                Response res = new Response(200, request.getRequestId(), serverName, "Đã xử lý xong: " + request.getPayload());
+                writer.println(res.serialize());
 
-                System.out.println("[Server 2] Hoàn thành phản hồi sau " + duration + "ms cho: " + clientAddress);
+                System.out.println("[" + serverName + "] Hoàn thành sau " + duration + "ms cho: " + clientAddress);
             }
 
         } catch (Exception e) {
-            System.err.println("[Server 2] Lỗi khi xử lý request từ " + clientAddress + ": " + e.getMessage());
+            System.err.println("[" + serverName + "] Lỗi xử lý: " + e.getMessage());
         }
     }
 }

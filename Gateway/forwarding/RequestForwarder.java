@@ -9,8 +9,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class RequestForwarder {
-        private static final int CONNECT_TIMEOUT = 100000;
-        private static final int READ_TIMEOUT = 100000;
+        private static final int CONNECT_TIMEOUT = 3000;
+        private static final int READ_TIMEOUT = 5000;
 
         public String forward(BackendServer backend, String request) throws Exception {
                 try (Socket backendSocket = new Socket()) {

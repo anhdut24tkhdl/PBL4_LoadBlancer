@@ -25,10 +25,16 @@ public class DynamicLoadBalancer implements LoadBalancer {
 
             ServerMetrics metrics = server.getMetrics();
 
-            double score = 0.35 * metrics.getCpuUsage()
-                    + 0.30 * metrics.getRamUsage()
-                    + 0.20 * metrics.getLatency()
-                    + 0.15 * server.getActiveConnections();
+            // Giả định Latency chuẩn tối đa là 1000ms, Connections chuẩn tối đa là 50
+            double normCpu = metrics.getCpuUsage();                     // [0 - 100]
+            double normRam = metrics.getRamUsage();                     // [0 - 100]
+            double normLatency = Math.min(100.0, (metrics.getLatency() / 1000.0) * 100.0);
+            double normConn = Math.min(100.0, (server.getActiveConnections() / 50.0) * 100.0);
+
+            double score = 0.35 * normCpu 
+                        + 0.30 * normRam 
+                        + 0.20 * normLatency 
+                        + 0.15 * normConn;
 
             if (score < lowestScore) {
                 lowestScore = score;

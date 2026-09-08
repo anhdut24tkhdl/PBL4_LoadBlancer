@@ -1,10 +1,9 @@
-package Server.Server2;
+package Server;
 
 import com.sun.management.OperatingSystemMXBean;
 import java.lang.management.ManagementFactory;
 
 public class SystemMonitor {
-
     private final OperatingSystemMXBean osBean;
 
     public SystemMonitor() {
@@ -15,7 +14,7 @@ public class SystemMonitor {
                 bean = (OperatingSystemMXBean) baseBean;
             }
         } catch (Exception e) {
-            System.err.println("[Server 2] Cảnh báo: Không thể lấy OperatingSystemMXBean: " + e.getMessage());
+            System.err.println("[Server 1] Cảnh báo: Không thể lấy OperatingSystemMXBean: " + e.getMessage());
         }
         this.osBean = bean;
     }
@@ -27,20 +26,16 @@ public class SystemMonitor {
 
         try {
             // Đo % CPU (từ 0.0 đến 1.0 -> nhân 100)
-            double cpuLoad = osBean.getCpuLoad();
-            if (cpuLoad < 0 || Double.isNaN(cpuLoad)) {
-                cpuLoad = 0.0;
+            double processCpu = osBean.getProcessCpuLoad();
+            if ((processCpu) < 0 || Double.isNaN(processCpu)) {
+                processCpu = 0.0;
             }
-            double cpuPercent = Math.max(0.0, Math.min(100.0, Math.round(cpuLoad * 1000.0) / 10.0));
+            double cpuPercent = Math.max(0.0, Math.min(100.0, Math.round(processCpu * 1000.0) / 10.0));
 
-            // Đo % RAM
-            long totalRam = osBean.getTotalMemorySize();
-            long freeRam = osBean.getFreeMemorySize();
-            long usedRam = totalRam - freeRam;
-
-            double ramPercent = totalRam <= 0
-                    ? 0.0
-                    : Math.max(0.0, Math.min(100.0, Math.round(usedRam * 1000.0 / (double) totalRam) / 10.0));
+            Runtime runtime = Runtime.getRuntime();
+            long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+            long maxMemory = runtime.maxMemory();
+             double ramPercent = maxMemory <= 0 ? 0.0 : Math.round((double) usedMemory / maxMemory * 1000.0) / 10.0;
 
             return new Metrics(cpuPercent, ramPercent);
         } catch (Exception e) {
@@ -48,8 +43,7 @@ public class SystemMonitor {
         }
     }
 
-    public record Metrics(
-            double cpuPercent,
-            double ramPercent) {
+    public record Metrics(double cpuPercent,double ramPercent) {
+
     }
 }

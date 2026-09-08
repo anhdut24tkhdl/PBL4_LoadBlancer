@@ -3,6 +3,9 @@ package Gateway.handler;
 import Gateway.forwarding.RequestForwarder;
 import Gateway.loadbalancer.LoadBalancer;
 import Gateway.model.BackendServer;
+import Gateway.protocol.Response;
+import Gateway.protocol.Request;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,29 +34,28 @@ public class ClientHandler implements Runnable {
                     new InputStreamReader(this.clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(
                     this.clientSocket.getOutputStream(), true)) {
-            String request = reader.readLine();
+            Request req=Request.parse(reader.readLine());
 
-            if (request == null) {
+            if (req == null) {
                 return;
             }
 
-            BackendServer backend = loadBalancer.selectServer();
-
-            if (backend == null) {
-                writer.println("ERROR: Không có server khả dụng");
-                return;
-            }
-
-            backend.increaseConnections();
-
-            try {
-
-                String response = forwarder.forward(backend, request);
-
-                writer.println(response);
-
-            } finally {
-                backend.decreaseConnections();
+            int maxRetries = 2;
+            String response = null;
+            for (int i = 0; i <= maxRetries; i++) {
+                BackendServer backend = loadBalancer.selectServer();
+                if (backend == null) break;
+                
+                try {
+                    backend.increaseConnections();
+                    response = forwarder.forward(backend, req.serialize());
+                    break; // Thành công
+                } catch (Exception e) {
+                    backend.setAlive(false); // Đánh dấu server lỗi ngay lập tức
+                    System.err.println("Lỗi forward đến " + backend.getName() + ", đang thử server khác...");
+                } finally {
+                    backend.decreaseConnections();
+                }
             }
 
         } catch (Exception e) {
