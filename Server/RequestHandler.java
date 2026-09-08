@@ -50,13 +50,21 @@ public class RequestHandler implements Runnable {
                 // Xử lý request từ Gateway / Client
                 System.out.println("[" + serverName + "] Nhận request: '" + request + "' từ " + clientAddress);
 
-                // Giả lập thời gian xử lý (200ms)
+                // Giả lập thời gian xử lý (3000ms)
                 long startTime = System.currentTimeMillis();
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
+                long durationTarget = 3000; // Ép CPU chạy trong 3 giây
+
+                while (System.currentTimeMillis() - startTime < durationTarget) {
+                    // Ép CPU tính toán liên tục
+                    Math.sqrt(Math.random() * 1000000.0);
                 }
+                // try {
+                //     Thread.sleep(6000);
+                    
+                    
+                // } catch (InterruptedException ie) {
+                //     Thread.currentThread().interrupt();
+                // }
                 long duration = System.currentTimeMillis() - startTime;
 
                 Response res = new Response(200, request.getRequestId(), serverName, "Đã xử lý xong: " + request.getPayload());

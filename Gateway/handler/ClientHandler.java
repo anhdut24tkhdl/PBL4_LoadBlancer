@@ -58,6 +58,13 @@ public class ClientHandler implements Runnable {
                 }
             }
 
+            if (response != null) {
+                writer.println(response);
+            } else {
+                Response err = new Response(503, req.getRequestId(), "Gateway", "Không có backend server nào khả dụng hoặc xử lý thành công");
+                writer.println(err.serialize());
+            }
+
         } catch (Exception e) {
             System.out.println(
                     "Lỗi xử lý client: " + e.getMessage());

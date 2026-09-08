@@ -35,14 +35,15 @@ public class Client {
             Request req=new Request("PING", "Client test load banlance");
             writer.println(req.serialize());
 
-            Response res=Response.parse(reader.readLine());
+            Response res = Response.parse(reader.readLine());
 
             if (res == null) {
-                System.out.println("Gateway đã đóng kết nối.");
-
+                System.out.println("[Client] Gateway đã đóng kết nối mà không phản hồi.");
+                return;
             }
 
-            System.out.println("Kết quả từ " + res.getServerName() + " (Mã " + res.getStatusCode() + "): " + res.getMessage());
+            System.out.println("[Client] Nhận phản hồi từ " + res.getServerName() 
+                    + " [Mã " + res.getStatusCode() + "]: " + res.getMessage());
 
         } catch (Exception e) {
             System.out.println("Không thể kết nối Gateway");
