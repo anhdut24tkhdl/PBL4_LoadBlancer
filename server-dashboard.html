@@ -59,8 +59,9 @@
   <script>
     
     let servers = [
-      { name: 'Server 1', host: 'localhost:5001', alive: true, cpu: 25.5, ram: 61.2, latency: 8.4, connections: 3 },
-      { name: 'Server 2', host: 'localhost:5003', alive: true, cpu: 42.1, ram: 55.7, latency: 12.6, connections: 1 }
+      { name: 'Server 1', host: 'localhost:5001', alive: true, cpu: 25.5, ram: 61.2, latency: 8.4, connections: 0 },
+      { name: 'Server 2', host: 'localhost:5002', alive: true, cpu: 30.1, ram: 55.7, latency: 10.2, connections: 0 },
+      { name: 'Server 3', host: 'localhost:5003', alive: true, cpu: 15.8, ram: 42.0, latency: 6.5, connections: 0 }
     ];
 
     const percent = value => Math.max(0, Math.min(100, value));

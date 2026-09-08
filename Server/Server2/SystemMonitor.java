@@ -1,144 +1,55 @@
-package com.mycompany.server;
+package Server.Server2;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.GlobalMemory;
-import oshi.hardware.HardwareAbstractionLayer;
-import oshi.hardware.NetworkIF;
+import com.sun.management.OperatingSystemMXBean;
+import java.lang.management.ManagementFactory;
 
 public class SystemMonitor {
 
-    private final CentralProcessor cpu;
-    private final GlobalMemory memory;
-    private final List<NetworkIF> networkList;
-
-    private long[] previousCpuTicks;
-    private long previousTime;
-
-    private final Map<String, Long> previousReceived = new HashMap<>();
-    private final Map<String, Long> previousSent = new HashMap<>();
+    private final OperatingSystemMXBean osBean;
 
     public SystemMonitor() {
-        SystemInfo systemInfo = new SystemInfo();
-        HardwareAbstractionLayer hardware = systemInfo.getHardware();
-
-        cpu = hardware.getProcessor();
-        memory = hardware.getMemory();
-        networkList = hardware.getNetworkIFs();
-
-        previousCpuTicks = cpu.getSystemCpuLoadTicks();
-        previousTime = System.nanoTime();
-
-        for (NetworkIF network : networkList) {
-            network.updateAttributes();
-
-            previousReceived.put(
-                    network.getName(),
-                    network.getBytesRecv());
-
-            previousSent.put(
-                    network.getName(),
-                    network.getBytesSent());
+        OperatingSystemMXBean bean = null;
+        try {
+            java.lang.management.OperatingSystemMXBean baseBean = ManagementFactory.getOperatingSystemMXBean();
+            if (baseBean instanceof OperatingSystemMXBean) {
+                bean = (OperatingSystemMXBean) baseBean;
+            }
+        } catch (Exception e) {
+            System.err.println("[Server 2] Cảnh báo: Không thể lấy OperatingSystemMXBean: " + e.getMessage());
         }
+        this.osBean = bean;
     }
 
     public synchronized Metrics getCurrentMetrics() {
-        long currentTime = System.nanoTime();
-
-        double elapsedSeconds = (currentTime - previousTime) / 1_000_000_000.0;
-
-        if (elapsedSeconds <= 0) {
-            return new Metrics(0, 0, 0, 0);
+        if (osBean == null) {
+            return new Metrics(0.0, 0.0);
         }
 
-        // CPU %
-        double cpuPercent = cpu.getSystemCpuLoadBetweenTicks(previousCpuTicks) * 100.0;
-
-        previousCpuTicks = cpu.getSystemCpuLoadTicks();
-
-        // RAM %
-        long totalRam = memory.getTotal();
-        long availableRam = memory.getAvailable();
-        long usedRam = totalRam - availableRam;
-
-        double ramPercent = totalRam == 0
-                ? 0
-                : usedRam * 100.0 / totalRam;
-
-        // Tốc độ mạng
-        long receivedBytes = 0;
-        long sentBytes = 0;
-
-        for (NetworkIF network : networkList) {
-            network.updateAttributes();
-
-            if (!isUsableNetwork(network)) {
-                continue;
+        try {
+            // Đo % CPU (từ 0.0 đến 1.0 -> nhân 100)
+            double cpuLoad = osBean.getCpuLoad();
+            if (cpuLoad < 0 || Double.isNaN(cpuLoad)) {
+                cpuLoad = 0.0;
             }
+            double cpuPercent = Math.max(0.0, Math.min(100.0, Math.round(cpuLoad * 1000.0) / 10.0));
 
-            String networkName = network.getName();
+            // Đo % RAM
+            long totalRam = osBean.getTotalMemorySize();
+            long freeRam = osBean.getFreeMemorySize();
+            long usedRam = totalRam - freeRam;
 
-            long currentReceived = network.getBytesRecv();
-            long currentSent = network.getBytesSent();
+            double ramPercent = totalRam <= 0
+                    ? 0.0
+                    : Math.max(0.0, Math.min(100.0, Math.round(usedRam * 1000.0 / (double) totalRam) / 10.0));
 
-            long oldReceived = previousReceived.getOrDefault(
-                    networkName,
-                    currentReceived);
-
-            long oldSent = previousSent.getOrDefault(
-                    networkName,
-                    currentSent);
-
-            long receivedDifference = currentReceived - oldReceived;
-            long sentDifference = currentSent - oldSent;
-
-            if (receivedDifference > 0) {
-                receivedBytes += receivedDifference;
-            }
-
-            if (sentDifference > 0) {
-                sentBytes += sentDifference;
-            }
-
-            previousReceived.put(networkName, currentReceived);
-            previousSent.put(networkName, currentSent);
+            return new Metrics(cpuPercent, ramPercent);
+        } catch (Exception e) {
+            return new Metrics(0.0, 0.0);
         }
-
-        // Đổi byte/giây thành megabit/giây
-        double downloadMbps = receivedBytes * 8.0 / elapsedSeconds / 1_000_000.0;
-
-        double uploadMbps = sentBytes * 8.0 / elapsedSeconds / 1_000_000.0;
-
-        previousTime = currentTime;
-
-        return new Metrics(
-                normalizePercent(cpuPercent),
-                normalizePercent(ramPercent),
-                Math.max(downloadMbps, 0),
-                Math.max(uploadMbps, 0));
-    }
-
-    private boolean isUsableNetwork(NetworkIF network) {
-        return network.getIfOperStatus() == NetworkIF.IfOperStatus.UP
-                && network.getIfType() != 24;
-    }
-
-    private double normalizePercent(double value) {
-        if (Double.isNaN(value) || value < 0) {
-            return 0;
-        }
-
-        return Math.min(value, 100);
     }
 
     public record Metrics(
             double cpuPercent,
-            double ramPercent,
-            double downloadMbps,
-            double uploadMbps) {
+            double ramPercent) {
     }
 }

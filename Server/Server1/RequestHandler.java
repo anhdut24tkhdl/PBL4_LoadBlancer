@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Gateway.protocol.Request;
+
 public class RequestHandler implements Runnable {
     private final Socket clientSocket;
     private final SystemMonitor systemMonitor;
@@ -18,37 +20,49 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
+        String clientAddress = clientSocket.getRemoteSocketAddress() != null 
+                ? clientSocket.getRemoteSocketAddress().toString() 
+                : "Unknown";
+
         try (
                 Socket socket = clientSocket;
-
                 BufferedReader reader = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
-
                 PrintWriter writer = new PrintWriter(
                         socket.getOutputStream(), true)) {
-            String request = reader.readLine();
+
+            Request request=Request.parse(raw);
 
             if (request == null) {
                 return;
             }
 
-            if ("METRICS".equals(request)) {
+            if ("METRICS".equalsIgnoreCase(request.trim())) {
+                // Phản hồi cho Gateway HealthMonitor
                 SystemMonitor.Metrics metrics = systemMonitor.getCurrentMetrics();
+                String metricsResponse = metrics.cpuPercent() + " " + metrics.ramPercent();
+                writer.println(metricsResponse);
+            } else {
+                // Xử lý request từ Gateway / Client
+                System.out.println("[Server 1] Nhận request: '" + request + "' từ " + clientAddress);
 
-                writer.println(
-                        metrics.cpuPercent() + " "
-                                + metrics.ramPercent());
+                // Giả lập thời gian tính toán tải (mặc định 200ms)
+                long startTime = System.currentTimeMillis();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+                long duration = System.currentTimeMillis() - startTime;
 
-            }
+                String response = "Server 1 (Port 5001): Đã xử lý thành công request [" + request + "] (" + duration + "ms)";
+                writer.println(response);
 
-            else {
-                // Xử lý request bình thường từ Gateway
-                Thread.sleep(50000);
-                writer.println("Server 1 :Backend đã xử lý: " + request);
+                System.out.println("[Server 1] Hoàn thành phản hồi sau " + duration + "ms cho: " + clientAddress);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("[Server 1] Lỗi khi xử lý request từ " + clientAddress + ": " + e.getMessage());
         }
     }
 }

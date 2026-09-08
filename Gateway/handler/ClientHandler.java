@@ -27,10 +27,10 @@ public class ClientHandler implements Runnable {
     public void run() {
         try (
 
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(this.clientSocket.getInputStream()));
-                PrintWriter writer = new PrintWriter(
-                        this.clientSocket.getOutputStream(), true)) {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(this.clientSocket.getInputStream()));
+            PrintWriter writer = new PrintWriter(
+                    this.clientSocket.getOutputStream(), true)) {
             String request = reader.readLine();
 
             if (request == null) {
