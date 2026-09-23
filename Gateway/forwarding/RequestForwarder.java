@@ -2,43 +2,45 @@ package Gateway.forwarding;
 
 import Gateway.model.BackendServer;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.InputStream;
+
+import java.io.OutputStream;
+
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import Gateway.protocol.Request;
 
 public class RequestForwarder {
         private static final int CONNECT_TIMEOUT = 3000;
         private static final int READ_TIMEOUT = 5000;
 
-        public String forward(BackendServer backend, String request) throws Exception {
+        public void forward(
+                        BackendServer backend,
+                        Request request,
+                        OutputStream clientOut) throws Exception {
+
                 try (Socket backendSocket = new Socket()) {
                         backendSocket.connect(
-                                        new InetSocketAddress(
-                                                        backend.getHost(),
-                                                        backend.getPort()),
+                                        new InetSocketAddress(backend.getHost(), backend.getPort()),
                                         CONNECT_TIMEOUT);
 
                         backendSocket.setSoTimeout(READ_TIMEOUT);
 
-                        try (
-                                        BufferedReader reader = new BufferedReader(
-                                                        new InputStreamReader(
-                                                                        backendSocket.getInputStream()));
-                                        PrintWriter writer = new PrintWriter(
-                                                        backendSocket.getOutputStream(), true)) {
-                                writer.println(request);
+                        OutputStream backendOut = backendSocket.getOutputStream();
+                        InputStream backendIn = backendSocket.getInputStream();
 
-                                String response = reader.readLine();
+                        // Gửi header + body request xuống backend
+                        request.writeTo(backendOut);
 
-                                if (response == null) {
-                                        throw new Exception(
-                                                        "Backend không trả response");
-                                }
+                        // Bản đơn giản: backend phải trả Connection: close
+                        byte[] buffer = new byte[8192];
+                        int n;
 
-                                return response;
+                        while ((n = backendIn.read(buffer)) != -1) {
+                                clientOut.write(buffer, 0, n);
                         }
+
+                        clientOut.flush();
                 }
         }
 }
