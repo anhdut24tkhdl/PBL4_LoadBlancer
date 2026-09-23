@@ -6,9 +6,10 @@ import Gateway.model.BackendServer;
 import Gateway.protocol.Response;
 import Gateway.protocol.Request;
 
-
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -30,25 +31,22 @@ public class ClientHandler implements Runnable {
     public void run() {
         try (
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(this.clientSocket.getInputStream()));
-            PrintWriter writer = new PrintWriter(
-                    this.clientSocket.getOutputStream(), true)) {
-            Request req=Request.parse(reader.readLine());
-
-            if (req == null) {
-                return;
-            }
+                Socket client = clientSocket;
+                InputStream clientIn = client.getInputStream();
+                OutputStream clientOut = client.getOutputStream()) {
+            // Không dùng readAllBytes()
+            Request request = Request.readRequest(client);
 
             int maxRetries = 2;
             String response = null;
             for (int i = 0; i <= maxRetries; i++) {
                 BackendServer backend = loadBalancer.selectServer();
-                if (backend == null) break;
-                
+                if (backend == null)
+                    break;
+
                 try {
                     backend.increaseConnections();
-                    response = forwarder.forward(backend, req.serialize());
+                    forwarder.forward(backend, request, clientOut);
                     break; // Thành công
                 } catch (Exception e) {
                     backend.setAlive(false); // Đánh dấu server lỗi ngay lập tức
@@ -56,13 +54,6 @@ public class ClientHandler implements Runnable {
                 } finally {
                     backend.decreaseConnections();
                 }
-            }
-
-            if (response != null) {
-                writer.println(response);
-            } else {
-                Response err = new Response(503, req.getRequestId(), "Gateway", "Không có backend server nào khả dụng hoặc xử lý thành công");
-                writer.println(err.serialize());
             }
 
         } catch (Exception e) {

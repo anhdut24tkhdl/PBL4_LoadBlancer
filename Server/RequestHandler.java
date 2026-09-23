@@ -4,77 +4,74 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import Gateway.protocol.Request;
-import Gateway.protocol.Response;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class RequestHandler implements Runnable {
     private final Socket clientSocket;
-    private final String serverName;
     private final SystemMonitor systemMonitor;
 
     public RequestHandler(
-            Socket clientSocket,
-            String serverName,
+            Socket clientSocket, String name,
             SystemMonitor systemMonitor) {
         this.clientSocket = clientSocket;
-        this.serverName = serverName;
         this.systemMonitor = systemMonitor;
     }
 
     @Override
     public void run() {
-        String clientAddress = clientSocket.getRemoteSocketAddress() != null 
-                ? clientSocket.getRemoteSocketAddress().toString() 
-                : "Unknown";
-
         try (
                 Socket socket = clientSocket;
+
                 BufferedReader reader = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
+
                 PrintWriter writer = new PrintWriter(
                         socket.getOutputStream(), true)) {
-
-            Request request = Request.parse(reader.readLine());
+            String request = reader.readLine();
 
             if (request == null) {
                 return;
             }
 
-            if ("METRICS".equals(request.getCommand())) {
-                // Phản hồi cho Gateway HealthMonitor
+            if ("METRICS".equals(request)) {
                 SystemMonitor.Metrics metrics = systemMonitor.getCurrentMetrics();
-                String metricsResponse = metrics.cpuPercent() + " " + metrics.ramPercent();
-                writer.println(metricsResponse);
-            } else {
-                // Xử lý request từ Gateway / Client
-                System.out.println("[" + serverName + "] Nhận request: '" + request + "' từ " + clientAddress);
 
-                // Giả lập thời gian xử lý (3000ms)
-                long startTime = System.currentTimeMillis();
-                long durationTarget = 3000; // Ép CPU chạy trong 3 giây
+                writer.println(
+                        metrics.cpuPercent() + " "
+                                + metrics.ramPercent());
 
-                while (System.currentTimeMillis() - startTime < durationTarget) {
-                    // Ép CPU tính toán liên tục
-                    Math.sqrt(Math.random() * 1000000.0);
+            }
+
+            else {
+                Path file = Path.of("D:\\HK1_2026_2027\\Web\\Homework\\banthan.htm");
+
+                if (!Files.exists(file)) {
+                    writer.print(
+                            "HTTP/1.1 404 Not Found\r\n" +
+                                    "Content-Type: text/plain; charset=UTF-8\r\n" +
+                                    "Connection: close\r\n" +
+                                    "\r\n" +
+                                    "Khong tim thay index.html");
+                    writer.flush();
+                    return;
                 }
-                // try {
-                //     Thread.sleep(6000);
-                    
-                    
-                // } catch (InterruptedException ie) {
-                //     Thread.currentThread().interrupt();
-                // }
-                long duration = System.currentTimeMillis() - startTime;
 
-                Response res = new Response(200, request.getRequestId(), serverName, "Đã xử lý xong: " + request.getPayload());
-                writer.println(res.serialize());
+                byte[] htmlBytes = Files.readAllBytes(file);
 
-                System.out.println("[" + serverName + "] Hoàn thành sau " + duration + "ms cho: " + clientAddress);
+                String header = "HTTP/1.1 200 OK\r\n" +
+                        "Content-Type: text/html; charset=UTF-8\r\n" +
+                        "Content-Length: " + htmlBytes.length + "\r\n" +
+                        "Connection: close\r\n" +
+                        "\r\n";
+
+                socket.getOutputStream().write(header.getBytes("UTF-8"));
+                socket.getOutputStream().write(htmlBytes);
+                socket.getOutputStream().flush();
             }
 
         } catch (Exception e) {
-            System.err.println("[" + serverName + "] Lỗi xử lý: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
