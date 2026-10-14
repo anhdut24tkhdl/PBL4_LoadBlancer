@@ -5,6 +5,8 @@ import Gateway.forwarding.RequestForwarder;
 import Gateway.handler.ClientHandler;
 import Gateway.loadbalancer.DynamicLoadBalancer;
 import Gateway.loadbalancer.LoadBalancer;
+import Gateway.loadbalancer.LeastConnectionLoadBalancer;
+import Gateway.loadbalancer.RoundRobinLoadBalancer;
 import Gateway.model.BackendServer;
 import Gateway.monitoring.HealthMonitor;
 import Gateway.registry.ServerRegistry;
@@ -19,13 +21,23 @@ public class GatewayServer {
     private final ConfigLoader config = new ConfigLoader();
     private final int gatewayPort;
     private final int dashboardPort;
+    private final String algorithm;
 
     private final ExecutorService requestPool = Executors.newFixedThreadPool(20);
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
 
     public GatewayServer() {
+        this(null);
+    }
+
+    public GatewayServer(String algorithmOverride) {
         this.gatewayPort = config.getInt("gateway.port", 5000);
         this.dashboardPort = config.getInt("dashboard.port", 5005);
+        if (algorithmOverride != null && !algorithmOverride.trim().isEmpty()) {
+            this.algorithm = algorithmOverride.trim();
+        } else {
+            this.algorithm = config.getString("loadbalancer.algorithm", "round_robin").trim();
+        }
     }
 
     public void start() {
@@ -41,7 +53,7 @@ public class GatewayServer {
             System.out.println("[Gateway] Đã nạp " + name + " -> " + host + ":" + port);
         }
 
-        LoadBalancer loadBalancer = new DynamicLoadBalancer(registry);
+        LoadBalancer loadBalancer = createLoadBalancer(algorithm, registry);
         RequestForwarder forwarder = new RequestForwarder();
         HealthMonitor healthMonitor = new HealthMonitor(registry);
         healthMonitor.start(monitorPool);
@@ -56,6 +68,7 @@ public class GatewayServer {
         try (ServerSocket serverSocket = new ServerSocket(gatewayPort)) {
             System.out.println("=================================================");
             System.out.println("   Gateway đang chạy tại port " + gatewayPort);
+            System.out.println("   Thuật toán: " + loadBalancer.getClass().getSimpleName());
             System.out.println("   Dashboard API tại: http://localhost:" + dashboardPort + "/api/servers");
             System.out.println("=================================================");
 
@@ -71,7 +84,31 @@ public class GatewayServer {
         }
     }
 
+    private LoadBalancer createLoadBalancer(String algo, ServerRegistry registry) {
+        String key = algo.toLowerCase();
+        switch (key) {
+            case "least_connection":
+            case "leastconnection":
+            case "least_conn":
+            case "lc":
+                System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
+                return new LeastConnectionLoadBalancer(registry);
+
+            case "dynamic":
+                System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC (Multi-metrics)");
+                return new DynamicLoadBalancer(registry);
+
+            case "round_robin":
+            case "roundrobin":
+            case "rr":
+            default:
+                System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
+                return new RoundRobinLoadBalancer(registry);
+        }
+    }
+
     public static void main(String[] args) {
-        new GatewayServer().start();
+        String algoArg = args.length > 0 ? args[0] : null;
+        new GatewayServer(algoArg).start();
     }
 }

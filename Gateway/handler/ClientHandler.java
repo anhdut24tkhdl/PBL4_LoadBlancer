@@ -30,10 +30,9 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try (
-
-                Socket client = clientSocket;
-                InputStream clientIn = client.getInputStream();
-                OutputStream clientOut = client.getOutputStream()) {
+            Socket client = clientSocket;
+            InputStream clientIn = client.getInputStream();
+            OutputStream clientOut = client.getOutputStream()) {
             // Không dùng readAllBytes()
             Request request = Request.readRequest(client);
 
