@@ -11,8 +11,8 @@ import java.net.Socket;
 import Gateway.protocol.Request;
 
 public class RequestForwarder {
-        private static final int CONNECT_TIMEOUT = 3000;
-        private static final int READ_TIMEOUT = 5000;
+        private static final int CONNECT_TIMEOUT = 20000;
+        private static final int READ_TIMEOUT = 25000;
 
         public void forward(
                         BackendServer backend,
