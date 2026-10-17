@@ -11,6 +11,7 @@ public class BackendServer {
     private volatile ServerMetrics metrics = new ServerMetrics();
 
     private final AtomicInteger activeConnections = new AtomicInteger(0);
+    private final java.util.concurrent.atomic.AtomicLong totalRequests = new java.util.concurrent.atomic.AtomicLong(0);
 
     public BackendServer(String name, String host, int port) {
         this.name = name;
@@ -20,6 +21,7 @@ public class BackendServer {
 
     public void increaseConnections() {
         activeConnections.incrementAndGet();
+        totalRequests.incrementAndGet();
     }
 
     public void decreaseConnections() {
@@ -28,6 +30,10 @@ public class BackendServer {
 
     public int getActiveConnections() {
         return activeConnections.get();
+    }
+
+    public long getTotalRequests() {
+        return totalRequests.get();
     }
 
     public String getName() {
