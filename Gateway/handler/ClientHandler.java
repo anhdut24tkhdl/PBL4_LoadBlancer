@@ -7,9 +7,7 @@ import Gateway.protocol.Response;
 import Gateway.protocol.Request;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -30,11 +28,16 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try (
-            Socket client = clientSocket;
-            InputStream clientIn = client.getInputStream();
-            OutputStream clientOut = client.getOutputStream()) {
-            // Không dùng readAllBytes()
-            Request request = Request.readRequest(client);
+
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(this.clientSocket.getInputStream()));
+                PrintWriter writer = new PrintWriter(
+                        this.clientSocket.getOutputStream(), true)) {
+            Request req = Request.parse(reader.readLine());
+
+            if (req == null) {
+                return;
+            }
 
             int maxRetries = 2;
             String response = null;
@@ -45,7 +48,8 @@ public class ClientHandler implements Runnable {
 
                 try {
                     backend.increaseConnections();
-                    forwarder.forward(backend, request, clientOut);
+                    response = forwarder.forward(backend, req.serialize());
+                    writer.print(response);
                     break; // Thành công
                 } catch (Exception e) {
                     backend.setAlive(false); // Đánh dấu server lỗi ngay lập tức
