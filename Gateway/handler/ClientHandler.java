@@ -3,12 +3,9 @@ package Gateway.handler;
 import Gateway.forwarding.RequestForwarder;
 import Gateway.loadbalancer.LoadBalancer;
 import Gateway.model.BackendServer;
-import Gateway.protocol.Response;
 import Gateway.protocol.Request;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
@@ -29,37 +26,51 @@ public class ClientHandler implements Runnable {
     public void run() {
         try (
 
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(this.clientSocket.getInputStream()));
-                PrintWriter writer = new PrintWriter(
-                        this.clientSocket.getOutputStream(), true)) {
-            Request req = Request.parse(reader.readLine());
-
-            if (req == null) {
-                return;
-            }
+                Socket client = clientSocket;
+                InputStream clientIn = client.getInputStream();
+                OutputStream clientOut = client.getOutputStream()) {
+            // Không dùng readAllBytes()
+            Request request = Request.readRequest(client);
 
             int maxRetries = 2;
-            String response = null;
+
             for (int i = 0; i <= maxRetries; i++) {
                 BackendServer backend = loadBalancer.selectServer();
                 if (backend == null)
                     break;
 
                 try {
+
                     backend.increaseConnections();
-                    response = forwarder.forward(backend, req.serialize());
-                    writer.print(response);
-                    break; // Thành công
+
+                    // Chỉ khi forward() hoàn thành
+                    // thì client mới nhận response
+                    forwarder.forward(
+                            backend,
+                            request,
+                            clientOut);
+
+                    // Thành công
+                    break;
+
                 } catch (Exception e) {
-                    backend.setAlive(false); // Đánh dấu server lỗi ngay lập tức
-                    System.err.println("Lỗi forward đến " + backend.getName() + ", đang thử server khác...");
+
+                    // Backend này có vấn đề
+                    backend.setAlive(false);
+
+                    System.err.println(
+                            "Backend " + backend.getName()
+                                    + " lỗi, retry...");
+
                 } finally {
+
                     backend.decreaseConnections();
                 }
             }
 
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             System.out.println(
                     "Lỗi xử lý client: " + e.getMessage());
         }

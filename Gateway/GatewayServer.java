@@ -53,7 +53,7 @@ public class GatewayServer {
             System.out.println("[Gateway] Đã nạp " + name + " -> " + host + ":" + port);
         }
 
-        LoadBalancer loadBalancer = createLoadBalancer(algorithm, registry);
+        LoadBalancer loadBalancer = new DynamicLoadBalancer(registry);
         RequestForwarder forwarder = new RequestForwarder();
         HealthMonitor healthMonitor = new HealthMonitor(registry);
         healthMonitor.start(monitorPool);
@@ -84,27 +84,29 @@ public class GatewayServer {
         }
     }
 
-    private LoadBalancer createLoadBalancer(String algo, ServerRegistry registry) {
-        String key = algo.toLowerCase();
-        switch (key) {
-            case "least_connection":
-            case "leastconnection":
-            case "least_conn":
-            case "lc":
-                System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
-                return new LeastConnectionLoadBalancer(registry);
+    private LoadBalancer createLoadBalancer(String algo, ServerRegistry registry)
+    {
+    String key = algo.toLowerCase();
+    switch (key) {
+    case "least_connection":
+    case "leastconnection":
+    case "least_conn":
+    case "lc":
+    System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
+    return new LeastConnectionLoadBalancer(registry);
 
-            case "dynamic":
-                System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC (Multi-metrics)");
-                return new DynamicLoadBalancer(registry);
+    case "dynamic":
+    System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC
+    (Multi-metrics)");
+    return new DynamicLoadBalancer(registry);
 
-            case "round_robin":
-            case "roundrobin":
-            case "rr":
-            default:
-                System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
-                return new RoundRobinLoadBalancer(registry);
-        }
+    case "round_robin":
+    case "roundrobin":
+    case "rr":
+    default:
+    System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
+    return new RoundRobinLoadBalancer(registry);
+    }
     }
 
     public static void main(String[] args) {
