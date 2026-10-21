@@ -35,7 +35,7 @@ public class HealthMonitor {
 
             System.out.println(
                     server.getName() + ": "
-                            + (alive ? "UP" : "DOWN") + "  Client  :" + server.getActiveConnections());
+                            + (alive ? "UP" : "DOWN") + " Client :" + server.getActiveConnections());
 
         }
     }
