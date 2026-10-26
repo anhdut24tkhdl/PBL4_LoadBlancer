@@ -11,9 +11,14 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import Gateway.utils.AppLogger;
 
 public class HealthMonitor {
     private final ServerRegistry registry;
+    private static final Logger LOGGER = Logger.getLogger(HealthMonitor.class.getName());
 
     public HealthMonitor(ServerRegistry registry) {
         this.registry = registry;
@@ -32,6 +37,20 @@ public class HealthMonitor {
             boolean alive = checkServer(server);
 
             server.setAlive(alive);
+
+            boolean wasAlive = server.isAlive();
+
+            server.setAlive(alive);
+
+            if (wasAlive != alive) {
+                LOGGER.info(() -> "event=BACKEND_STATE_CHANGED"
+                        + " backend=" + server.getName()
+                        + " state=" + (alive ? "UP" : "DOWN"));
+                AppLogger.LOGGER.info(
+                    "event=BACKEND_STATE_CHANGED"
+                    + " backend=" + server.getName()
+                    + " state=" + (alive ? "UP" : "DOWN"));
+            }
 
             System.out.println(
                     server.getName() + ": "
@@ -52,31 +71,50 @@ public class HealthMonitor {
 
             socket.setSoTimeout(1000);
 
-            PrintWriter writer = new PrintWriter(
-                    socket.getOutputStream(), true);
-
+            OutputStream writer = socket.getOutputStream();
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
+                    new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
-            // println để Backend dùng readLine() có thể nhận lệnh
-            writer.println("METRICS");
+            String request = "GET /metrics HTTP/1.1\r\n"
+                    + "Host: " + server.getHost() + "\r\n"
+                    + "Connection: close\r\n\r\n";
 
-            // Chỉ đọc đúng một dòng response
-            String message = reader.readLine();
+            writer.write(request.getBytes(StandardCharsets.UTF_8));
+            writer.flush();
 
-            if (message == null) {
+            // Đọc HTTP status line
+            String statusLine = reader.readLine();
+            if (statusLine == null || !statusLine.contains(" 200 ")) {
                 return false;
             }
 
-            String[] parts = message.trim().split("\\s+");
+            // Đọc headers đến dòng trống
+            while (true) {
+                String header = reader.readLine();
+                if (header == null || header.isEmpty()) {
+                    break;
+                }
+            }
 
-            if (parts.length < 2) {
+            // Đọc JSON body
+            StringBuilder body = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                body.append(line);
+            }
+
+            String message = body.toString();
+
+            java.util.regex.Matcher matcher = java.util.regex.Pattern
+            .compile("\"cpu\":([0-9.]+),\"ram\":([0-9.]+)")
+            .matcher(message);
+
+            if (!matcher.find()) {
                 return false;
             }
 
-            double cpu = Double.parseDouble(parts[0]);
-            double ram = Double.parseDouble(parts[1]);
-
+            double cpu = Double.parseDouble(matcher.group(1));
+            double ram = Double.parseDouble(matcher.group(2));
             double latencyMs = (System.nanoTime() - start) / 1_000_000.0;
 
             ServerMetrics metrics = new ServerMetrics();
