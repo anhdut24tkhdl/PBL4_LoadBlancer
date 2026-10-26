@@ -25,14 +25,14 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try (
-            Socket client = clientSocket;
-            InputStream clientIn = client.getInputStream();
-            OutputStream clientOut = client.getOutputStream()) {
+
+                Socket client = clientSocket;
+                InputStream clientIn = client.getInputStream();
+                OutputStream clientOut = client.getOutputStream()) {
             // Không dùng readAllBytes()
             Request request = Request.readRequest(client);
 
             int maxRetries = 2;
-            boolean completed = false;
 
             for (int i = 0; i <= maxRetries; i++) {
                 BackendServer backend = loadBalancer.selectServer();
@@ -40,12 +40,16 @@ public class ClientHandler implements Runnable {
                     break;
 
                 try {
+
                     backend.increaseConnections();
 
                     // Chỉ khi forward() hoàn thành
                     // thì client mới nhận response
-                    forwarder.forward(backend, request, clientOut);
-                    completed = true;
+                    forwarder.forward(
+                            backend,
+                            request,
+                            clientOut);
+
                     // Thành công
                     break;
 
@@ -54,38 +58,21 @@ public class ClientHandler implements Runnable {
                     // Backend này có vấn đề
                     backend.setAlive(false);
 
-                System.err.println(
-                        "Backend " + backend.getName()
-                                + " lỗi, lần thử "
-                                + (i + 1) + "/"
-                                + (maxRetries + 1)
-                                + ": " + e.getMessage());
+                    System.err.println(
+                            "Backend " + backend.getName()
+                                    + " lỗi, retry...");
+
                 } finally {
+
                     backend.decreaseConnections();
                 }
             }
-        
-            if (!completed) {
-                sendServiceUnavailable(clientOut);
-            }
 
-        } catch (Exception e) {
-            System.out.println("Lỗi xử lý client: " + e.getMessage());
+        } catch (
+
+        Exception e) {
+            System.out.println(
+                    "Lỗi xử lý client: " + e.getMessage());
         }
     }
-    
-
-    private void sendServiceUnavailable(OutputStream out) throws java.io.IOException {
-    byte[] body = "Service Unavailable".getBytes(
-            java.nio.charset.StandardCharsets.UTF_8);
-
-    String headers = "HTTP/1.1 503 Service Unavailable\r\n"
-            + "Content-Type: text/plain; charset=UTF-8\r\n"
-            + "Content-Length: " + body.length + "\r\n"
-            + "Connection: close\r\n\r\n";
-
-    out.write(headers.getBytes(java.nio.charset.StandardCharsets.US_ASCII));
-    out.write(body);
-    out.flush();
-}
 }

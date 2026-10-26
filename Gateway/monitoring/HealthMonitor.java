@@ -34,9 +34,11 @@ public class HealthMonitor {
 
     private void checkAllServers() {
         for (BackendServer server : registry.getServers()) {
-            boolean wasAlive = server.isAlive();
             boolean alive = checkServer(server);
 
+            server.setAlive(alive);
+
+            boolean wasAlive = server.isAlive();
 
             server.setAlive(alive);
 
