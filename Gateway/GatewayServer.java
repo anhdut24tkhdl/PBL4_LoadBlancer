@@ -11,9 +11,15 @@ import Gateway.model.BackendServer;
 import Gateway.monitoring.HealthMonitor;
 import Gateway.registry.ServerRegistry;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
@@ -27,7 +33,9 @@ public class GatewayServer {
     private final int dashboardPort;
     private final String algorithm;
 
-    private final ExecutorService requestPool = Executors.newFixedThreadPool(20);
+    private final ThreadPoolExecutor requestPool = new ThreadPoolExecutor(
+            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100),
+            new ThreadPoolExecutor.AbortPolicy());
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
     private static final Logger LOGGER = Logger.getLogger(GatewayServer.class.getName());
 
@@ -81,7 +89,12 @@ public class GatewayServer {
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
+                try {
+                    requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
+                } catch (RejectedExecutionException e) {
+                    rejectClient(clientSocket);
+                    LOGGER.warning("Gateway quá tải: từ chối request mới vì thread pool và queue đã đầy.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,6 +103,21 @@ public class GatewayServer {
         } finally {
             requestPool.shutdown();
             monitorPool.shutdown();
+        }
+    }
+
+    private void rejectClient(Socket clientSocket) {
+        byte[] body = "Service Unavailable".getBytes(StandardCharsets.UTF_8);
+        try (Socket socket = clientSocket; OutputStream output = socket.getOutputStream()) {
+            String headers = "HTTP/1.1 503 Service Unavailable\r\n"
+                    + "Content-Type: text/plain; charset=UTF-8\r\n"
+                    + "Content-Length: " + body.length + "\r\n"
+                    + "Connection: close\r\n\r\n";
+            output.write(headers.getBytes(StandardCharsets.US_ASCII));
+            output.write(body);
+            output.flush();
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, "Không thể gửi phản hồi 503 cho client bị từ chối.", e);
         }
     }
 
