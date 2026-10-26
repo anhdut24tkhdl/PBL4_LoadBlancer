@@ -13,15 +13,20 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import Gateway.protocol.Request;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RequestForwarder {
         private static final int CONNECT_TIMEOUT = 50000;
         private static final int READ_TIMEOUT = 50000;
+        private static final Logger LOGGER = Logger.getLogger(RequestForwarder.class.getName());
 
         public void forward(
                         BackendServer backend,
                         Request request,
                         OutputStream clientOut) throws Exception {
+                
+                long startTime = System.nanoTime();
 
                 try (Socket backendSocket = new Socket()) {
 
@@ -61,6 +66,19 @@ public class RequestForwarder {
                         // Lúc này MỚI gửi cho client
                         responseBuffer.writeTo(clientOut);
                         clientOut.flush();
+                        long latencyMs = (System.nanoTime() - startTime) / 1_000_000;
+
+                        LOGGER.info(() -> "event=REQUEST_COMPLETED"
+                                + " backend=" + backend.getName()
+                                + " latency_ms=" + latencyMs);
+                }catch (SocketTimeoutException e) {
+                        LOGGER.log(Level.WARNING,
+                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);
+                        throw e;
+                        } catch (IOException e) {
+                        LOGGER.log(Level.WARNING,
+                                "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
+                        throw e;
                 }
         }
 }

@@ -16,6 +16,10 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import Gateway.utils.AppLogger;
+
 
 public class GatewayServer {
     private final ConfigLoader config = new ConfigLoader();
@@ -25,6 +29,7 @@ public class GatewayServer {
 
     private final ExecutorService requestPool = Executors.newFixedThreadPool(20);
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
+    private static final Logger LOGGER = Logger.getLogger(GatewayServer.class.getName());
 
     public GatewayServer() {
         this(null);
@@ -66,6 +71,8 @@ public class GatewayServer {
         }
 
         try (ServerSocket serverSocket = new ServerSocket(gatewayPort)) {
+            LOGGER.info(() -> "event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
+            AppLogger.LOGGER.info("event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
             System.out.println("=================================================");
             System.out.println("   Gateway đang chạy tại port " + gatewayPort);
             System.out.println("   Thuật toán: " + loadBalancer.getClass().getSimpleName());
@@ -78,6 +85,8 @@ public class GatewayServer {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "event=GATEWAY_ERROR", e);
+            AppLogger.LOGGER.log(Level.SEVERE, "event=GATEWAY_ERROR", e);
         } finally {
             requestPool.shutdown();
             monitorPool.shutdown();
@@ -86,27 +95,26 @@ public class GatewayServer {
 
     private LoadBalancer createLoadBalancer(String algo, ServerRegistry registry)
     {
-    String key = algo.toLowerCase();
-    switch (key) {
-    case "least_connection":
-    case "leastconnection":
-    case "least_conn":
-    case "lc":
-    System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
-    return new LeastConnectionLoadBalancer(registry);
+        String key = algo.toLowerCase();
+        switch (key) {
+            case "least_connection":
+            case "leastconnection":
+            case "least_conn":
+            case "lc":
+            System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
+            return new LeastConnectionLoadBalancer(registry);
 
-    case "dynamic":
-    System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC
-    (Multi-metrics)");
-    return new DynamicLoadBalancer(registry);
+            case "dynamic":
+            System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC(Multi-metrics)");
+            return new DynamicLoadBalancer(registry);
 
-    case "round_robin":
-    case "roundrobin":
-    case "rr":
-    default:
-    System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
-    return new RoundRobinLoadBalancer(registry);
-    }
+            case "round_robin":
+            case "roundrobin":
+            case "rr":
+            default:
+            System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
+            return new RoundRobinLoadBalancer(registry);
+        }
     }
 
     public static void main(String[] args) {
