@@ -34,7 +34,7 @@ public class GatewayServer {
     private final String algorithm;
 
     private final ThreadPoolExecutor requestPool = new ThreadPoolExecutor(
-            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100),
+            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(50),
             new ThreadPoolExecutor.AbortPolicy());
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
     private static final Logger LOGGER = Logger.getLogger(GatewayServer.class.getName());
