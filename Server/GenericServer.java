@@ -1,16 +1,22 @@
 package Server;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class GenericServer {
     private final String name;
     private final int port;
     private final SystemMonitor monitor;
-    private final ExecutorService threadPool = Executors.newFixedThreadPool(20);
+    private final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
+            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100),
+            new ThreadPoolExecutor.AbortPolicy());
 
     private volatile boolean running = true;
     private ServerSocket serverSocket;
@@ -31,7 +37,12 @@ public class GenericServer {
 
             while (running) {
                 Socket clientSocket = serverSocket.accept();
-                threadPool.execute(new RequestHandler(clientSocket, name, monitor));
+                try {
+                    threadPool.execute(new RequestHandler(clientSocket, name, monitor));
+                } catch (RejectedExecutionException e) {
+                    rejectClient(clientSocket);
+                    System.err.println("[" + name + "] Qua tải: từ chối request mới vì thread pool và queue đã đầy.");
+                }
             }
         } catch (IOException e) {
             if (running) {
@@ -39,6 +50,21 @@ public class GenericServer {
             }
         } finally {
             stop();
+        }
+    }
+
+    private void rejectClient(Socket clientSocket) {
+        byte[] body = "Service Unavailable".getBytes(StandardCharsets.UTF_8);
+        try (Socket socket = clientSocket; OutputStream output = socket.getOutputStream()) {
+            String headers = "HTTP/1.1 503 Service Unavailable\r\n"
+                    + "Content-Type: text/plain; charset=UTF-8\r\n"
+                    + "Content-Length: " + body.length + "\r\n"
+                    + "Connection: close\r\n\r\n";
+            output.write(headers.getBytes(StandardCharsets.US_ASCII));
+            output.write(body);
+            output.flush();
+        } catch (IOException e) {
+            System.err.println("[" + name + "] Không thể gửi phản hồi 503 cho client bị từ chối: " + e.getMessage());
         }
     }
 
