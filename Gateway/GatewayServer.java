@@ -34,10 +34,9 @@ public class GatewayServer {
     private final String algorithm;
 
     private final ThreadPoolExecutor requestPool = new ThreadPoolExecutor(
-            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(50),
+            10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10),
             new ThreadPoolExecutor.AbortPolicy());
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
-    private static final Logger LOGGER = Logger.getLogger(GatewayServer.class.getName());
 
     public GatewayServer() {
         this(null);
@@ -63,6 +62,7 @@ public class GatewayServer {
             String host = config.getString("server." + i + ".host", "localhost");
             int port = config.getInt("server." + i + ".port", 5000 + i);
             registry.addServer(new BackendServer(name, host, port));
+            AppLogger.LOGGER.info("event=BACKEND_CONFIGURED backend=" + name + " host=" + host + " port=" + port);
             System.out.println("[Gateway] Đã nạp " + name + " -> " + host + ":" + port);
         }
 
@@ -79,7 +79,8 @@ public class GatewayServer {
         }
 
         try (ServerSocket serverSocket = new ServerSocket(gatewayPort)) {
-            LOGGER.info(() -> "event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
+            AppLogger.LOGGER.info("event=GATEWAY_STARTED gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort
+                    + " algorithm=" + loadBalancer.getClass().getSimpleName());
             AppLogger.LOGGER.info("event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
             System.out.println("=================================================");
             System.out.println("   Gateway đang chạy tại port " + gatewayPort);
@@ -93,12 +94,14 @@ public class GatewayServer {
                     requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
                 } catch (RejectedExecutionException e) {
                     rejectClient(clientSocket);
-                    LOGGER.warning("Gateway quá tải: từ chối request mới vì thread pool và queue đã đầy.");
+                    String message = "event=GATEWAY_OVERLOADED action=REJECT_REQUEST reason=THREAD_POOL_AND_QUEUE_FULL";
+                    // Ghi log cảnh báo khi từ chối request do quá tải
+                    AppLogger.LOGGER.warning(message);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.log(Level.SEVERE, "event=GATEWAY_ERROR", e);
+            // Ghi log lỗi nghiêm trọng khi gateway gặp sự cố
             AppLogger.LOGGER.log(Level.SEVERE, "event=GATEWAY_ERROR", e);
         } finally {
             requestPool.shutdown();
@@ -117,7 +120,8 @@ public class GatewayServer {
             output.write(body);
             output.flush();
         } catch (IOException e) {
-            LOGGER.log(Level.FINE, "Không thể gửi phản hồi 503 cho client bị từ chối.", e);
+            //"Không thể gửi phản hồi 503 cho client bị từ chối."
+            AppLogger.LOGGER.log(Level.FINE, "event=REJECTED_CLIENT_503_WRITE_FAILED", e);
         }
     }
 

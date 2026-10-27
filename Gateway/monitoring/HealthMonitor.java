@@ -18,18 +18,13 @@ import Gateway.utils.AppLogger;
 
 public class HealthMonitor {
     private final ServerRegistry registry;
-    private static final Logger LOGGER = Logger.getLogger(HealthMonitor.class.getName());
 
     public HealthMonitor(ServerRegistry registry) {
         this.registry = registry;
     }
 
     public void start(ScheduledExecutorService monitorPool) {
-        monitorPool.scheduleAtFixedRate(
-                this::checkAllServers,
-                0,
-                1,
-                TimeUnit.SECONDS);
+        monitorPool.scheduleAtFixedRate(this::checkAllServers, 0, 1, TimeUnit.SECONDS);
     }
 
     private void checkAllServers() {
@@ -40,14 +35,12 @@ public class HealthMonitor {
 
             boolean wasAlive = server.isAlive();
 
+
             server.setAlive(alive);
 
             if (wasAlive != alive) {
-                LOGGER.info(() -> "event=BACKEND_STATE_CHANGED"
-                        + " backend=" + server.getName()
-                        + " state=" + (alive ? "UP" : "DOWN"));
-                AppLogger.LOGGER.info(
-                    "event=BACKEND_STATE_CHANGED"
+                // Ghi log thông tin khi trạng thái của backend thay đổi
+                AppLogger.LOGGER.info("event=BACKEND_STATE_CHANGED"
                     + " backend=" + server.getName()
                     + " state=" + (alive ? "UP" : "DOWN"));
             }
@@ -63,12 +56,7 @@ public class HealthMonitor {
         long start = System.nanoTime();
 
         try (Socket socket = new Socket()) {
-            socket.connect(
-                    new InetSocketAddress(
-                            server.getHost(),
-                            server.getPort()),
-                    1000);
-
+            socket.connect(new InetSocketAddress( server.getHost(), server.getPort()), 1000);
             socket.setSoTimeout(1000);
 
             OutputStream writer = socket.getOutputStream();

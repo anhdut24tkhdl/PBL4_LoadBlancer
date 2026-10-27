@@ -17,19 +17,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RequestForwarder {
+<<<<<<< HEAD
+        private static final int CONNECT_TIMEOUT = 3000;
+        private static final int READ_TIMEOUT = 5000;
+=======
         private static final int CONNECT_TIMEOUT = 50000;
         private static final int READ_TIMEOUT = 50000;
         private static final Logger LOGGER = Logger.getLogger(RequestForwarder.class.getName());
+>>>>>>> origin/develop
 
-        public void forward(
-                        BackendServer backend,
-                        Request request,
-                        OutputStream clientOut) throws Exception {
-                
+        public void forward(BackendServer backend, Request request, OutputStream clientOut) throws Exception {
                 long startTime = System.nanoTime();
 
                 try (Socket backendSocket = new Socket()) {
-
                         backendSocket.connect(
                                         new InetSocketAddress(
                                                         backend.getHost(),
@@ -50,19 +50,52 @@ public class RequestForwarder {
                         // =========================
 
                         ByteArrayOutputStream responseBuffer = new ByteArrayOutputStream();
-
                         byte[] buffer = new byte[8192];
-
                         int n;
 
                         while ((n = backendIn.read(buffer)) != -1) {
-
                                 responseBuffer.write(buffer, 0, n);
                         }
 
                         // Nếu chạy tới đây nghĩa là backend
                         // đã gửi xong response
 
+<<<<<<< HEAD
+                        // Gửi response về client sau khi đã đọc xong từ backend.
+                        try {
+                                responseBuffer.writeTo(clientOut);
+                                clientOut.flush();
+                        } catch (IOException e) {
+                                // Ghi log lỗi khi không thể gửi response về client
+                                AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
+                                        "event=CLIENT_WRITE_ERROR backend=" + backend.getName(), e);
+                                throw new ClientWriteException("Cannot write response to client", e);
+                        }
+
+                        long latencyMs = (System.nanoTime() - startTime) / 1_000_000;
+
+
+                        // Ghi log thông tin khi hoàn thành request
+                        AppLogger.LOGGER.info("event=REQUEST_COMPLETED" + " backend=" + backend.getName()
+                                + " latency_ms=" + latencyMs);
+
+                }catch (SocketTimeoutException e) {
+                        // Ghi log cảnh báo khi backend timeout
+                        AppLogger.LOGGER.log(Level.WARNING,
+                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);
+                        throw e;
+
+                } catch (IOException e) {
+                        // Ghi log cảnh báo khi có lỗi kết nối với backend
+                        AppLogger.LOGGER.log(Level.WARNING,
+                                "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
+                        throw e;
+                }
+        }
+        public static class ClientWriteException extends IOException {
+                public ClientWriteException(String message, IOException cause) {
+                super(message, cause);
+=======
                         // Lúc này MỚI gửi cho client
                         responseBuffer.writeTo(clientOut);
                         clientOut.flush();
@@ -79,6 +112,7 @@ public class RequestForwarder {
                         LOGGER.log(Level.WARNING,
                                 "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
                         throw e;
+>>>>>>> origin/develop
                 }
         }
 }

@@ -15,8 +15,7 @@ public class AppLogger {
         try {
             Files.createDirectories(Path.of("logs"));
 
-            FileHandler handler = new FileHandler(
-                    "logs/gateway.log", true);
+            FileHandler handler = new FileHandler("logs/gateway.log", true);
 
             handler.setFormatter(new SimpleFormatter());
             LOGGER.addHandler(handler);
