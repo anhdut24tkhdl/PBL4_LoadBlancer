@@ -20,17 +20,11 @@ import Gateway.utils.AppLogger;
 public class RequestForwarder {
         private static final int CONNECT_TIMEOUT = 3000;
         private static final int READ_TIMEOUT = 5000;
-        private static final Logger LOGGER = Logger.getLogger(RequestForwarder.class.getName());
 
-        public void forward(
-                        BackendServer backend,
-                        Request request,
-                        OutputStream clientOut) throws Exception {
-                
+        public void forward(BackendServer backend, Request request, OutputStream clientOut) throws Exception {
                 long startTime = System.nanoTime();
 
                 try (Socket backendSocket = new Socket()) {
-
                         backendSocket.connect(
                                         new InetSocketAddress(
                                                         backend.getHost(),
@@ -51,13 +45,10 @@ public class RequestForwarder {
                         // =========================
 
                         ByteArrayOutputStream responseBuffer = new ByteArrayOutputStream();
-
                         byte[] buffer = new byte[8192];
-
                         int n;
 
                         while ((n = backendIn.read(buffer)) != -1) {
-
                                 responseBuffer.write(buffer, 0, n);
                         }
 
@@ -66,36 +57,38 @@ public class RequestForwarder {
 
                         // Gửi response về client sau khi đã đọc xong từ backend.
                         try {
-                        responseBuffer.writeTo(clientOut);
-                        clientOut.flush();
+                                responseBuffer.writeTo(clientOut);
+                                clientOut.flush();
                         } catch (IOException e) {
-                        LOGGER.log(Level.WARNING,
-                                "event=CLIENT_WRITE_ERROR backend=" + backend.getName(), e);
-                        return;
+                                // Ghi log lỗi khi không thể gửi response về client
+                                AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
+                                        "event=CLIENT_WRITE_ERROR backend=" + backend.getName(), e);
+                                throw new ClientWriteException("Cannot write response to client", e);
                         }
 
                         long latencyMs = (System.nanoTime() - startTime) / 1_000_000;
 
-                        LOGGER.info(() -> "event=REQUEST_COMPLETED"
-                                + " backend=" + backend.getName()
+
+                        // Ghi log thông tin khi hoàn thành request
+                        AppLogger.LOGGER.info("event=REQUEST_COMPLETED" + " backend=" + backend.getName()
                                 + " latency_ms=" + latencyMs);
-                        AppLogger.LOGGER.info(
-                                "event=REQUEST_COMPLETED"
-                                + " backend=" + backend.getName()
-                                + " latency_ms=" + latencyMs);
+
                 }catch (SocketTimeoutException e) {
-                        LOGGER.log(Level.WARNING,
-                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);
+                        // Ghi log cảnh báo khi backend timeout
                         AppLogger.LOGGER.log(Level.WARNING,
-                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);throw e;
+                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);
+                        throw e;
 
                 } catch (IOException e) {
+                        // Ghi log cảnh báo khi có lỗi kết nối với backend
                         AppLogger.LOGGER.log(Level.WARNING,
                                 "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
-
-                        LOGGER.log(Level.WARNING,
-                                "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
-                throw e;
+                        throw e;
+                }
+        }
+        public static class ClientWriteException extends IOException {
+                public ClientWriteException(String message, IOException cause) {
+                super(message, cause);
                 }
         }
 }
