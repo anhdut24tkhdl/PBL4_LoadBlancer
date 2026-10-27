@@ -15,11 +15,16 @@ import java.net.SocketTimeoutException;
 import Gateway.protocol.Request;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Gateway.utils.AppLogger;
 
 public class RequestForwarder {
+<<<<<<< HEAD
         private static final int CONNECT_TIMEOUT = 3000;
         private static final int READ_TIMEOUT = 5000;
+=======
+        private static final int CONNECT_TIMEOUT = 50000;
+        private static final int READ_TIMEOUT = 50000;
+        private static final Logger LOGGER = Logger.getLogger(RequestForwarder.class.getName());
+>>>>>>> origin/develop
 
         public void forward(BackendServer backend, Request request, OutputStream clientOut) throws Exception {
                 long startTime = System.nanoTime();
@@ -55,6 +60,7 @@ public class RequestForwarder {
                         // Nếu chạy tới đây nghĩa là backend
                         // đã gửi xong response
 
+<<<<<<< HEAD
                         // Gửi response về client sau khi đã đọc xong từ backend.
                         try {
                                 responseBuffer.writeTo(clientOut);
@@ -89,6 +95,24 @@ public class RequestForwarder {
         public static class ClientWriteException extends IOException {
                 public ClientWriteException(String message, IOException cause) {
                 super(message, cause);
+=======
+                        // Lúc này MỚI gửi cho client
+                        responseBuffer.writeTo(clientOut);
+                        clientOut.flush();
+                        long latencyMs = (System.nanoTime() - startTime) / 1_000_000;
+
+                        LOGGER.info(() -> "event=REQUEST_COMPLETED"
+                                + " backend=" + backend.getName()
+                                + " latency_ms=" + latencyMs);
+                }catch (SocketTimeoutException e) {
+                        LOGGER.log(Level.WARNING,
+                                "event=BACKEND_TIMEOUT backend=" + backend.getName(), e);
+                        throw e;
+                        } catch (IOException e) {
+                        LOGGER.log(Level.WARNING,
+                                "event=BACKEND_CONNECTION_ERROR backend=" + backend.getName(), e);
+                        throw e;
+>>>>>>> origin/develop
                 }
         }
 }

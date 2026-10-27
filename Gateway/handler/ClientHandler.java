@@ -26,15 +26,25 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try (
+<<<<<<< HEAD
             Socket client = clientSocket;
             InputStream clientIn = client.getInputStream();
             OutputStream clientOut = client.getOutputStream()) {
 
+=======
+
+                Socket client = clientSocket;
+                InputStream clientIn = client.getInputStream();
+                OutputStream clientOut = client.getOutputStream()) {
+>>>>>>> origin/develop
             // Không dùng readAllBytes()
             Request request = Request.readRequest(client);
             int maxRetries = 2;
+<<<<<<< HEAD
             boolean completed = false;
             boolean clientWriteFailed = false;
+=======
+>>>>>>> origin/develop
 
             for (int i = 0; i <= maxRetries; i++) {
                 BackendServer backend = loadBalancer.selectServer();
@@ -44,11 +54,15 @@ public class ClientHandler implements Runnable {
                 }
 
                 try {
+
                     backend.increaseConnections();
                     // Chỉ khi forward() hoàn thành
                     // thì client mới nhận response
-                    forwarder.forward(backend, request, clientOut);
-                    completed = true;
+                    forwarder.forward(
+                            backend,
+                            request,
+                            clientOut);
+
                     // Thành công
                     break;
 
@@ -59,14 +73,24 @@ public class ClientHandler implements Runnable {
                     break;
                 } catch (IOException e) {
                     backend.setAlive(false);
+<<<<<<< HEAD
                     AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
                             "event=BACKEND_RETRY backend=" + backend.getName()
                                     + " attempt=" + (i + 1)
                                     + " max_attempts=" + (maxRetries + 1), e);
+=======
+
+                    System.err.println(
+                            "Backend " + backend.getName()
+                                    + " lỗi, retry...");
+
+>>>>>>> origin/develop
                 } finally {
+
                     backend.decreaseConnections();
                 }
             }
+<<<<<<< HEAD
         
             if (!completed && !clientWriteFailed && !client.isClosed()) {
                 sendServiceUnavailable(clientOut);
@@ -99,4 +123,14 @@ public class ClientHandler implements Runnable {
             AppLogger.LOGGER.fine("event=CLIENT_503_WRITE_FAILED message=" + e.getMessage());
         }
     }
+=======
+
+        } catch (
+
+        Exception e) {
+            System.out.println(
+                    "Lỗi xử lý client: " + e.getMessage());
+        }
+    }
+>>>>>>> origin/develop
 }
