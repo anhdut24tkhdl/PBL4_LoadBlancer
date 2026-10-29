@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import Gateway.utils.AppLogger;
 
 
@@ -66,7 +65,7 @@ public class GatewayServer {
             System.out.println("[Gateway] Đã nạp " + name + " -> " + host + ":" + port);
         }
 
-        LoadBalancer loadBalancer = new DynamicLoadBalancer(registry);
+        LoadBalancer loadBalancer = createLoadBalancer(algorithm, registry);
         RequestForwarder forwarder = new RequestForwarder();
         HealthMonitor healthMonitor = new HealthMonitor(registry);
         healthMonitor.start(monitorPool);
@@ -94,9 +93,14 @@ public class GatewayServer {
                     requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
                 } catch (RejectedExecutionException e) {
                     rejectClient(clientSocket);
-                    String message = "event=GATEWAY_OVERLOADED action=REJECT_REQUEST reason=THREAD_POOL_AND_QUEUE_FULL";
-                    // Ghi log cảnh báo khi từ chối request do quá tải
-                    AppLogger.LOGGER.warning(message);
+                    AppLogger.LOGGER.warning(
+                        "event=GATEWAY_OVERLOADED"
+                        + " reason=THREAD_POOL_FULL"
+                        + " active_workers=" + requestPool.getActiveCount()
+                        + " queue_size=" + requestPool.getQueue().size()
+                        + " queue_capacity=" + (requestPool.getQueue().size()
+                        + requestPool.getQueue().remainingCapacity())
+                    );
                 }
             }
         } catch (Exception e) {

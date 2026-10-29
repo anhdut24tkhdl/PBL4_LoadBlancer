@@ -11,7 +11,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import Gateway.utils.AppLogger;
@@ -30,11 +29,7 @@ public class HealthMonitor {
     private void checkAllServers() {
         for (BackendServer server : registry.getServers()) {
             boolean alive = checkServer(server);
-
-            server.setAlive(alive);
-
             boolean wasAlive = server.isAlive();
-
 
             server.setAlive(alive);
 
