@@ -15,7 +15,7 @@ public class GenericServer {
     private final int port;
     private final SystemMonitor monitor;
     private final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
-            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100),
+            10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10),
             new ThreadPoolExecutor.AbortPolicy());
 
     private volatile boolean running = true;

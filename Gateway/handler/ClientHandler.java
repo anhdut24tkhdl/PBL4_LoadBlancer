@@ -58,6 +58,7 @@ public class ClientHandler implements Runnable {
                             clientOut);
 
                     // Thành công
+                    completed = true;
                     break;
 
                 } catch (RequestForwarder.ClientWriteException e) {

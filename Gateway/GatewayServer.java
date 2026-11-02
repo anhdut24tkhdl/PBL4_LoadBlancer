@@ -33,7 +33,7 @@ public class GatewayServer {
     private final String algorithm;
 
     private final ThreadPoolExecutor requestPool = new ThreadPoolExecutor(
-            10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10),
+            20, 20, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100),
             new ThreadPoolExecutor.AbortPolicy());
     private final ScheduledExecutorService monitorPool = Executors.newScheduledThreadPool(3);
 

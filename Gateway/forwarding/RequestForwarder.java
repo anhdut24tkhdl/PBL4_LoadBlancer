@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import Gateway.utils.AppLogger;
 
 public class RequestForwarder {
-        private static final int CONNECT_TIMEOUT = 5000;
-        private static final int READ_TIMEOUT = 5000;
+        private static final int CONNECT_TIMEOUT = 3;
+        private static final int READ_TIMEOUT = 3;
 
         public void forward(BackendServer backend, Request request, OutputStream clientOut) throws Exception {
                 long startTime = System.nanoTime();
