@@ -4,11 +4,11 @@ import Gateway.model.BackendServer;
 import Gateway.model.ServerMetrics;
 import Gateway.registry.ServerRegistry;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetSocketAddress;
-import java.net.Socket;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.io.OutputStream;
@@ -16,7 +16,12 @@ import java.nio.charset.StandardCharsets;
 import Gateway.utils.AppLogger;
 
 public class HealthMonitor {
+
     private final ServerRegistry registry;
+
+    private final HttpClient httpClient = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(1))
+            .build();
 
     public HealthMonitor(ServerRegistry registry) {
         this.registry = registry;
@@ -28,6 +33,7 @@ public class HealthMonitor {
 
     private void checkAllServers() {
         for (BackendServer server : registry.getServers()) {
+
             boolean alive = checkServer(server);
             boolean wasAlive = server.isAlive();
 
@@ -42,62 +48,57 @@ public class HealthMonitor {
 
             System.out.println(
                     server.getName() + ": "
-                            + (alive ? "UP" : "DOWN") + " Client :" + server.getActiveConnections());
-
+                            + (alive ? "UP" : "DOWN")
+                            + " Client: " + server.getActiveConnections());
         }
     }
 
     private boolean checkServer(BackendServer server) {
+
         long start = System.nanoTime();
 
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress( server.getHost(), server.getPort()), 1000);
-            socket.setSoTimeout(1000);
+        try {
+            String url = "http://"
+                    + server.getHost()
+                    + ":"
+                    + server.getPort()
+                    + "/OnlineExam/api/metrics?cmd=METRICS";
 
-            OutputStream writer = socket.getOutputStream();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(1))
+                    .GET()
+                    .build();
 
-            String request = "GET /metrics HTTP/1.1\r\n"
-                    + "Host: " + server.getHost() + "\r\n"
-                    + "Connection: close\r\n\r\n";
+            HttpResponse<String> response = httpClient.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString());
 
-            writer.write(request.getBytes(StandardCharsets.UTF_8));
-            writer.flush();
-
-            // Đọc HTTP status line
-            String statusLine = reader.readLine();
-            if (statusLine == null || !statusLine.contains(" 200 ")) {
+            if (response.statusCode() != 200) {
+                System.out.println(
+                        server.getName()
+                                + " HTTP status: "
+                                + response.statusCode());
                 return false;
             }
 
-            // Đọc headers đến dòng trống
-            while (true) {
-                String header = reader.readLine();
-                if (header == null || header.isEmpty()) {
-                    break;
-                }
-            }
+            String message = response.body().trim();
 
-            // Đọc JSON body
-            StringBuilder body = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                body.append(line);
-            }
+            String[] parts = message.split("\\s+");
 
-            String message = body.toString();
-
-            java.util.regex.Matcher matcher = java.util.regex.Pattern
-            .compile("\"cpu\":([0-9.]+),\"ram\":([0-9.]+)")
-            .matcher(message);
-
-            if (!matcher.find()) {
+            if (parts.length != 2) {
                 return false;
             }
 
-            double cpu = Double.parseDouble(matcher.group(1));
-            double ram = Double.parseDouble(matcher.group(2));
+            double cpu = Double.parseDouble(parts[0]);
+            double ram = Double.parseDouble(parts[1]);
+
+            if (!Double.isFinite(cpu) || !Double.isFinite(ram)
+                    || cpu < 0 || cpu > 100
+                    || ram < 0 || ram > 100) {
+                return false;
+            }
+
             double latencyMs = (System.nanoTime() - start) / 1_000_000.0;
 
             ServerMetrics metrics = new ServerMetrics();
@@ -113,9 +114,9 @@ public class HealthMonitor {
         } catch (Exception e) {
             System.out.println(
                     "Không kiểm tra được "
-                            + server.getName() + ": "
+                            + server.getName()
+                            + ": "
                             + e.getMessage());
-
             return false;
         }
     }
