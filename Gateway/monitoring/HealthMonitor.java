@@ -11,6 +11,9 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import Gateway.utils.AppLogger;
 
 public class HealthMonitor {
 
@@ -25,19 +28,23 @@ public class HealthMonitor {
     }
 
     public void start(ScheduledExecutorService monitorPool) {
-        monitorPool.scheduleAtFixedRate(
-                this::checkAllServers,
-                0,
-                1,
-                TimeUnit.SECONDS);
+        monitorPool.scheduleAtFixedRate(this::checkAllServers, 0, 1, TimeUnit.SECONDS);
     }
 
     private void checkAllServers() {
         for (BackendServer server : registry.getServers()) {
 
             boolean alive = checkServer(server);
+            boolean wasAlive = server.isAlive();
 
             server.setAlive(alive);
+
+            if (wasAlive != alive) {
+                // Ghi log thông tin khi trạng thái của backend thay đổi
+                AppLogger.LOGGER.info("event=BACKEND_STATE_CHANGED"
+                    + " backend=" + server.getName()
+                    + " state=" + (alive ? "UP" : "DOWN"));
+            }
 
             System.out.println(
                     server.getName() + ": "
