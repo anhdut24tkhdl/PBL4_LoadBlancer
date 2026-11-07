@@ -340,3 +340,336 @@ Nov 06, 2026 10:17:41 AM Gateway.forwarding.RequestForwarder forward
 INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=7
 Nov 06, 2026 1:24:44 PM Gateway.monitoring.HealthMonitor checkAllServers
 INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 07, 2026 5:29:24 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 07, 2026 5:29:24 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 07, 2026 5:29:24 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 07, 2026 5:29:24 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 07, 2026 5:29:24 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 07, 2026 5:29:24 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=DOWN
+Nov 07, 2026 5:29:24 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=DOWN
+Nov 07, 2026 5:29:24 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 07, 2026 5:31:27 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 07, 2026 5:33:09 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 07, 2026 5:33:20 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=UP
+Nov 07, 2026 5:35:25 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 07, 2026 5:35:25 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 07, 2026 5:35:25 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 07, 2026 5:35:26 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 07, 2026 5:35:26 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 07, 2026 5:40:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:40:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=211
+Nov 07, 2026 5:40:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=19
+Nov 07, 2026 5:40:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:01 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=422
+Nov 07, 2026 5:41:01 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=14
+Nov 07, 2026 5:41:02 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=231
+Nov 07, 2026 5:41:05 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=355
+Nov 07, 2026 5:41:05 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=236
+Nov 07, 2026 5:41:05 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=7
+Nov 07, 2026 5:41:05 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=23
+Nov 07, 2026 5:41:11 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=392
+Nov 07, 2026 5:41:11 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 07, 2026 5:41:12 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=8
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=37
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:13 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:14 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
+Nov 07, 2026 5:41:15 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:15 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:15 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
+Nov 07, 2026 5:41:15 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 07, 2026 5:41:15 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:28 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=625
+Nov 07, 2026 5:41:28 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:28 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=24
+Nov 07, 2026 5:41:28 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=15
+Nov 07, 2026 5:41:29 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=30
+Nov 07, 2026 5:41:29 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=19
+Nov 07, 2026 5:41:29 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=18
+Nov 07, 2026 5:41:29 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=22
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=22
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=18
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=18
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=20
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=17
+Nov 07, 2026 5:41:30 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=18
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=22
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=17
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=15
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:31 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=18
+Nov 07, 2026 5:41:35 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=21
+Nov 07, 2026 5:41:35 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=15
+Nov 07, 2026 5:41:35 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=13
+Nov 07, 2026 5:41:35 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=22
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=15
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=15
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=14
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=14
+Nov 07, 2026 5:41:36 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:37 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:37 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=17
+Nov 07, 2026 5:41:37 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=16
+Nov 07, 2026 5:41:39 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=14
+Nov 07, 2026 5:41:39 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=11
+Nov 07, 2026 5:41:39 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:39 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=6
+Nov 07, 2026 5:41:39 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:40 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=10
+Nov 07, 2026 5:41:40 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:40 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=16
+Nov 07, 2026 5:41:40 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=17
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=10
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=10
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=11
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:41 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:42 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:43 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=545
+Nov 07, 2026 5:41:47 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 07, 2026 5:41:47 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:47 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:48 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:48 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:48 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:49 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=8
+Nov 07, 2026 5:41:49 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:49 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:51 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:51 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:51 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:51 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:51 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 07, 2026 5:41:52 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=6
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:53 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:54 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:55 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:55 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:55 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:55 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:55 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:56 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 07, 2026 5:41:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:57 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:58 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:59 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:41:59 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 07, 2026 5:41:59 PM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 07, 2026 5:43:03 PM Gateway.handler.ClientHandler run
+WARNING: event=CLIENT_HANDLER_ERROR
+java.io.IOException: HTTP request khong hop le
+	at Gateway.protocol.Request.readRequest(Request.java:58)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:36)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+

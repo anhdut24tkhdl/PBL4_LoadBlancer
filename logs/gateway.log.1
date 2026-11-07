@@ -1,0 +1,19 @@
+Nov 07, 2026 5:34:34 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 07, 2026 5:34:34 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 07, 2026 5:34:34 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 07, 2026 5:34:34 PM Gateway.GatewayServer start
+SEVERE: event=GATEWAY_ERROR
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:577)
+	at java.base/sun.nio.ch.Net.bind(Net.java:566)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:636)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:391)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:278)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:171)
+	at Gateway.GatewayServer.start(GatewayServer.java:84)
+	at Gateway.GatewayServer.main(GatewayServer.java:175)
+
