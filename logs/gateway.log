@@ -1,990 +1,528 @@
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:05:52 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:05:52 PM Gateway.monitoring.HealthMonitor checkAllServers
-INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=0
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:01 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=0
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=0
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=0
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:08:02 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:09:05 PM Gateway.GatewayServer start
-INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=5001
-Oct 31, 2026 4:09:05 PM Gateway.GatewayServer start
-INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=5002
-Oct 31, 2026 4:09:05 PM Gateway.GatewayServer start
+Nov 02, 2026 3:29:15 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 02, 2026 3:29:15 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 02, 2026 3:29:15 PM Gateway.GatewayServer start
 INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
-Oct 31, 2026 4:09:05 PM Gateway.GatewayServer start
+Nov 02, 2026 3:29:15 PM Gateway.GatewayServer start
 INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=RoundRobinLoadBalancer
-Oct 31, 2026 4:09:05 PM Gateway.GatewayServer start
+Nov 02, 2026 3:29:15 PM Gateway.GatewayServer start
 INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=6
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 1
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 2
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-WARNING: event=BACKEND_TIMEOUT backend=Server 3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:09:08 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 3 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 3 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 3 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:15 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=DOWN
+Nov 02, 2026 3:29:15 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=DOWN
+Nov 02, 2026 3:29:15 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=NO_BACKEND_AVAILABLE attempt=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=NO_BACKEND_AVAILABLE attempt=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=NO_BACKEND_AVAILABLE attempt=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 3 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=NO_BACKEND_AVAILABLE attempt=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=NO_BACKEND_AVAILABLE attempt=1
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:277)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:302)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:354)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:798)
-	at java.base/java.net.Socket$SocketInputStream.implRead(Socket.java:974)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:964)
-	at java.base/java.io.InputStream.read(InputStream.java:222)
-	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:50)
-	at Gateway.handler.ClientHandler.run(ClientHandler.java:55)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
-WARNING: event=NO_BACKEND_AVAILABLE attempt=2
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.handler.ClientHandler run
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
 WARNING: event=REQUEST_FAILED status=503
-Oct 31, 2026 4:09:08 PM Gateway.monitoring.HealthMonitor checkAllServers
-INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
-Oct 31, 2026 4:09:08 PM Gateway.monitoring.HealthMonitor checkAllServers
-INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
-Oct 31, 2026 4:09:08 PM Gateway.monitoring.HealthMonitor checkAllServers
-INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=UP
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=1
-Oct 31, 2026 4:09:10 PM Gateway.forwarding.RequestForwarder forward
-INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:29:25 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:11 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 02, 2026 3:30:11 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 02, 2026 3:30:11 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 02, 2026 3:30:12 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=RoundRobinLoadBalancer
+Nov 02, 2026 3:30:12 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 02, 2026 3:30:12 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=DOWN
+Nov 02, 2026 3:30:12 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=DOWN
+Nov 02, 2026 3:30:12 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:30:18 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:57 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=5001
+Nov 02, 2026 3:31:57 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=5002
+Nov 02, 2026 3:31:57 PM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 02, 2026 3:31:57 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=RoundRobinLoadBalancer
+Nov 02, 2026 3:31:57 PM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 02, 2026 3:31:57 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=DOWN
+Nov 02, 2026 3:31:57 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=DOWN
+Nov 02, 2026 3:31:58 PM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:31:59 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=1
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 02, 2026 3:32:00 PM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
