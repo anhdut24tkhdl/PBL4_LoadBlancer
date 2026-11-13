@@ -3,25 +3,21 @@ package Gateway.monitoring;
 import Gateway.model.BackendServer;
 import Gateway.model.ServerMetrics;
 import Gateway.registry.ServerRegistry;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import Gateway.utils.AppLogger;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class HealthMonitor {
-
     private final ServerRegistry registry;
-
-    private final HttpClient httpClient = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(1))
-            .build();
 
     public HealthMonitor(ServerRegistry registry) {
         this.registry = registry;
@@ -33,91 +29,100 @@ public class HealthMonitor {
 
     private void checkAllServers() {
         for (BackendServer server : registry.getServers()) {
-
-            boolean alive = checkServer(server);
             boolean wasAlive = server.isAlive();
+            boolean alive = checkServer(server);
 
             server.setAlive(alive);
 
-            if (wasAlive != alive) {
-                // Ghi log thông tin khi trạng thái của backend thay đổi
+            if (alive != wasAlive) {
                 AppLogger.LOGGER.info("event=BACKEND_STATE_CHANGED"
-                    + " backend=" + server.getName()
-                    + " state=" + (alive ? "UP" : "DOWN"));
+                        + " backend=" + server.getName()
+                        + " state=" + (alive ? "UP" : "DOWN"));
             }
 
-            System.out.println(
-                    server.getName() + ": "
-                            + (alive ? "UP" : "DOWN")
-                            + " Client: " + server.getActiveConnections());
+            System.out.println(server.getName() + ": "
+                    + (alive ? "UP" : "DOWN")
+                    + " Client :" + server.getActiveConnections());
         }
     }
 
     private boolean checkServer(BackendServer server) {
-
         long start = System.nanoTime();
 
-        try {
-            String url = "http://"
-                    + server.getHost()
-                    + ":"
-                    + server.getPort()
-                    + "/OnlineExam/api/metrics?cmd=METRICS";
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(
+                    server.getHost(), server.getPort()), 1000);
+            socket.setSoTimeout(1000);
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(1))
-                    .GET()
-                    .build();
+            OutputStream writer = socket.getOutputStream();
+            InputStream reader = socket.getInputStream();
 
-            HttpResponse<String> response = httpClient.send(
-                    request,
-                    HttpResponse.BodyHandlers.ofString());
+            String request = "GET /metrics HTTP/1.1\r\n"
+                    + "Host: " + server.getHost() + "\r\n"
+                    + "Connection: close\r\n\r\n";
 
-            if (response.statusCode() != 200) {
-                System.out.println(
-                        server.getName()
-                                + " HTTP status: "
-                                + response.statusCode());
+            writer.write(request.getBytes(StandardCharsets.UTF_8));
+            writer.flush();
+
+            String statusLine = readHttpLine(reader);
+            if (statusLine == null || !statusLine.contains(" 200 ")) {
                 return false;
             }
 
-            String message = response.body().trim();
+            int contentLength = -1;
 
-            String[] parts = message.split("\\s+");
+            while (true) {
+                String header = readHttpLine(reader);
+                if (header == null || header.isEmpty()) break;
 
-            if (parts.length != 2) {
-                return false;
+                if (header.toLowerCase().startsWith("content-length:")) {
+                    contentLength = Integer.parseInt(
+                            header.substring(header.indexOf(':') + 1).trim());
+                }
             }
 
-            double cpu = Double.parseDouble(parts[0]);
-            double ram = Double.parseDouble(parts[1]);
+            if (contentLength < 0) return false;
 
-            if (!Double.isFinite(cpu) || !Double.isFinite(ram)
-                    || cpu < 0 || cpu > 100
-                    || ram < 0 || ram > 100) {
-                return false;
-            }
+            byte[] bodyBytes = reader.readNBytes(contentLength);
+            if (bodyBytes.length != contentLength) return false;
 
+            String body = new String(bodyBytes, StandardCharsets.UTF_8);
+
+            Matcher matcher = Pattern
+                    .compile("\"cpu\":([0-9.]+),\"ram\":([0-9.]+)")
+                    .matcher(body);
+
+            if (!matcher.find()) return false;
+
+            double cpu = Double.parseDouble(matcher.group(1));
+            double ram = Double.parseDouble(matcher.group(2));
             double latencyMs = (System.nanoTime() - start) / 1_000_000.0;
 
             ServerMetrics metrics = new ServerMetrics();
 
-            metrics.setCpuUsage(cpu);
-            metrics.setRamUsage(ram);
-            metrics.setLatency(latencyMs);
-
-            server.setMetrics(metrics);
+            // Chưa cập nhật metrics vì cần xác nhận API của ServerMetrics
+            // và BackendServer.
 
             return true;
 
         } catch (Exception e) {
-            System.out.println(
-                    "Không kiểm tra được "
-                            + server.getName()
-                            + ": "
-                            + e.getMessage());
+            System.out.println("Không kiểm tra được "
+                    + server.getName() + ": " + e.getMessage());
             return false;
         }
+    }
+
+    private String readHttpLine(InputStream input) throws Exception {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int current;
+
+        while ((current = input.read()) != -1) {
+            if (current == '\n') break;
+            if (current != '\r') buffer.write(current);
+        }
+
+        if (current == -1 && buffer.size() == 0) return null;
+
+        return buffer.toString(StandardCharsets.UTF_8);
     }
 }

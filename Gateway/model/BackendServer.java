@@ -1,22 +1,35 @@
+
 package Gateway.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class BackendServer {
     private final String name;
     private final String host;
     private final int port;
+    private final int weight;
 
     private volatile boolean alive = true;
     private volatile ServerMetrics metrics = new ServerMetrics();
 
     private final AtomicInteger activeConnections = new AtomicInteger(0);
-    private final java.util.concurrent.atomic.AtomicLong totalRequests = new java.util.concurrent.atomic.AtomicLong(0);
+    private final AtomicLong totalRequests = new AtomicLong(0);
 
+    // Constructor cũ: mặc định weight = 1
     public BackendServer(String name, String host, int port) {
+        this(name, host, port, 1);
+    }
+
+    public BackendServer(String name, String host, int port, int weight) {
+        if (weight <= 0) {
+            throw new IllegalArgumentException("Weight must be greater than 0");
+        }
+
         this.name = name;
         this.host = host;
         this.port = port;
+        this.weight = weight;
     }
 
     public void increaseConnections() {
@@ -25,7 +38,7 @@ public class BackendServer {
     }
 
     public void decreaseConnections() {
-        activeConnections.decrementAndGet();
+        activeConnections.updateAndGet(value -> Math.max(0, value - 1));
     }
 
     public int getActiveConnections() {
@@ -34,6 +47,10 @@ public class BackendServer {
 
     public long getTotalRequests() {
         return totalRequests.get();
+    }
+
+    public int getWeight() {
+        return weight;
     }
 
     public String getName() {

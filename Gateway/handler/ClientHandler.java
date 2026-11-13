@@ -41,7 +41,7 @@ public class ClientHandler implements Runnable {
 
 
             for (int i = 0; i <= maxRetries; i++) {
-                BackendServer backend = loadBalancer.selectServer();
+                BackendServer backend = loadBalancer.selectServerForRequest();
                 if (backend == null){
                     AppLogger.LOGGER.warning("event=NO_BACKEND_AVAILABLE attempt=" + (i + 1));
                     break;
@@ -49,7 +49,6 @@ public class ClientHandler implements Runnable {
 
                 try {
 
-                    backend.increaseConnections();
                     // Chỉ khi forward() hoàn thành
                     // thì client mới nhận response
                     forwarder.forward(
@@ -58,7 +57,9 @@ public class ClientHandler implements Runnable {
                             clientOut);
 
                     // Thành công
-                    completed = true;
+
+                    completed=true;
+
                     break;
 
                 } catch (RequestForwarder.ClientWriteException e) {

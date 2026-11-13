@@ -6,7 +6,9 @@ import Gateway.handler.ClientHandler;
 import Gateway.loadbalancer.DynamicLoadBalancer;
 import Gateway.loadbalancer.LoadBalancer;
 import Gateway.loadbalancer.LeastConnectionLoadBalancer;
+import Gateway.loadbalancer.WeightedLeastConnectionLoadBalancer;
 import Gateway.loadbalancer.RoundRobinLoadBalancer;
+import Gateway.loadbalancer.AdaptiveLoadBalancer;
 import Gateway.model.BackendServer;
 import Gateway.monitoring.HealthMonitor;
 import Gateway.registry.ServerRegistry;
@@ -60,7 +62,9 @@ public class GatewayServer {
             String name = config.getString("server." + i + ".name", "Server " + i);
             String host = config.getString("server." + i + ".host", "localhost");
             int port = config.getInt("server." + i + ".port", 5000 + i);
-            registry.addServer(new BackendServer(name, host, port));
+            int weight = config.getInt("server." + i + ".weight", 1);
+            
+            registry.addServer(new BackendServer(name, host, port, weight));
             AppLogger.LOGGER.info("event=BACKEND_CONFIGURED backend=" + name + " host=" + host + " port=" + port);
             System.out.println("[Gateway] Đã nạp " + name + " -> " + host + ":" + port);
         }
@@ -137,19 +141,32 @@ public class GatewayServer {
             case "leastconnection":
             case "least_conn":
             case "lc":
-            System.out.println("[Gateway] Kích hoạt thuật toán: LEAST CONNECTION");
+            System.out.println("[Gateway] Kich hoat thuat toan: LEAST CONNECTION");
             return new LeastConnectionLoadBalancer(registry);
 
             case "dynamic":
-            System.out.println("[Gateway] Kích hoạt thuật toán: DYNAMIC(Multi-metrics)");
+            System.out.println("[Gateway] Kich hoat thuat toan: DYNAMIC(Multi-metrics)");
             return new DynamicLoadBalancer(registry);
 
             case "round_robin":
             case "roundrobin":
             case "rr":
             default:
-            System.out.println("[Gateway] Kích hoạt thuật toán: ROUND ROBIN");
+            System.out.println("[Gateway] Kich hoat thuat toan: ROUND ROBIN");
             return new RoundRobinLoadBalancer(registry);
+
+            case "weighted_least_connection":
+            case "weightedleastconnection":
+            case "weighted_lc":
+            case "wlc":
+                System.out.println("[Gateway] Kich hoat thuat toan: WEIGHTED LEAST CONNECTION");
+                return new WeightedLeastConnectionLoadBalancer(registry);
+            case "adaptive":
+            case "adapt":
+            case "alb":
+                System.out.println("[Gateway] Kích hoạt thuật toán: ADAPTIVE (Hysteresis Multi-metrics)");
+                return new AdaptiveLoadBalancer(registry);
+            
         }
     }
 
