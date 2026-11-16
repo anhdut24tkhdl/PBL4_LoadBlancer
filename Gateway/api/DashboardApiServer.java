@@ -97,6 +97,10 @@ public class DashboardApiServer {
 
                     .append("\"connections\":")
                     .append(server.getActiveConnections())
+                    .append(",")
+
+                    .append("\"totalRequests\":")
+                    .append(server.getTotalRequests())
 
                     .append("}");
 

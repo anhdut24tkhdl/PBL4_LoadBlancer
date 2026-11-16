@@ -1,17 +1,23 @@
 package Server;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class GenericServer {
     private final String name;
     private final int port;
     private final SystemMonitor monitor;
-    private final ExecutorService threadPool = Executors.newFixedThreadPool(20);
+    private final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
+            10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10),
+            new ThreadPoolExecutor.AbortPolicy());
+
     private volatile boolean running = true;
     private ServerSocket serverSocket;
 
@@ -22,53 +28,62 @@ public class GenericServer {
     }
 
     public void start() {
-        // Đăng ký Hook giải phóng tài nguyên khi tắt (Ctrl + C)
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("\n[" + name + "] Dang dung server...");
-            stop();
-        }));
-
         try {
             serverSocket = new ServerSocket(port);
+
             System.out.println("=================================================");
-            System.out.println("   " + name + " đã khởi động tại port: " + port);
+            System.out.println("   " + name + " da khoi dong tai port: " + port);
             System.out.println("=================================================");
 
             while (running) {
+                Socket clientSocket = serverSocket.accept();
                 try {
-                    Socket clientSocket = serverSocket.accept();
                     threadPool.execute(new RequestHandler(clientSocket, name, monitor));
-                } catch (IOException e) {
-                    if (!running) break;
-                    System.err.println("[" + name + "] Lỗi accept kết nối: " + e.getMessage());
+                } catch (RejectedExecutionException e) {
+                    rejectClient(clientSocket);
+                    System.err.println("[" + name + "] Qua tải: từ chối request mới vì thread pool và queue đã đầy.");
                 }
             }
-        } catch (Exception e) {
-            System.err.println("[" + name + "] Lỗi khởi động ServerSocket: " + e.getMessage());
-            e.printStackTrace();
+        } catch (IOException e) {
+            if (running) {
+                System.err.println("[" + name + "] Loi server: " + e.getMessage());
+            }
         } finally {
             stop();
         }
     }
 
+    private void rejectClient(Socket clientSocket) {
+        byte[] body = "Service Unavailable".getBytes(StandardCharsets.UTF_8);
+        try (Socket socket = clientSocket; OutputStream output = socket.getOutputStream()) {
+            String headers = "HTTP/1.1 503 Service Unavailable\r\n"
+                    + "Content-Type: text/plain; charset=UTF-8\r\n"
+                    + "Content-Length: " + body.length + "\r\n"
+                    + "Connection: close\r\n\r\n";
+            output.write(headers.getBytes(StandardCharsets.US_ASCII));
+            output.write(body);
+            output.flush();
+        } catch (IOException e) {
+            System.err.println("[" + name + "] Không thể gửi phản hồi 503 cho client bị từ chối: " + e.getMessage());
+        }
+    }
+
     public synchronized void stop() {
+        if (!running) {
+            return;
+        }
+
         running = false;
+
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
             }
         } catch (IOException e) {
-            System.err.println("[" + name + "] Lỗi đóng socket: " + e.getMessage());
+            System.err.println("[" + name + "] Loi dong server: " + e.getMessage());
         }
 
         threadPool.shutdown();
-        try {
-            if (!threadPool.awaitTermination(3, TimeUnit.SECONDS)) {
-                threadPool.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            threadPool.shutdownNow();
-        }
-        System.out.println("[" + name + "] Đã dừng hoàn toàn.");
+        System.out.println("[" + name + "] Da dung.");
     }
 }

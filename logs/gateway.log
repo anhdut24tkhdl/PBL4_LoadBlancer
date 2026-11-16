@@ -1,0 +1,832 @@
+Nov 17, 2026 1:26:12 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 17, 2026 1:26:12 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 17, 2026 1:26:12 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 17, 2026 1:26:12 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=DOWN
+Nov 17, 2026 1:26:12 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=DOWN
+Nov 17, 2026 1:26:12 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=DOWN
+Nov 17, 2026 1:26:12 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 17, 2026 1:26:12 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 17, 2026 1:33:00 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 17, 2026 1:33:00 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 17, 2026 1:33:00 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 17, 2026 1:33:00 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 17, 2026 1:33:00 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 17, 2026 1:35:15 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:35:15 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=140
+Nov 17, 2026 1:35:15 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 1:35:15 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 1
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:15 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:15 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:35:15 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=118
+Nov 17, 2026 1:35:16 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=1
+Nov 17, 2026 1:35:16 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=1
+Nov 17, 2026 1:35:16 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=1
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=2 pool_size=1 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=3 pool_size=2 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 2
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$2.write(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.implWrite(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.write(Unknown Source)
+	at java.base/java.io.OutputStream.write(Unknown Source)
+	at Gateway.protocol.Request.writeTo(Request.java:166)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:37)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=5 pool_size=4 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=4 pool_size=3 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=6 pool_size=5 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 17, 2026 1:35:18 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$2.write(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.implWrite(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.write(Unknown Source)
+	at java.base/java.io.OutputStream.write(Unknown Source)
+	at Gateway.protocol.Request.writeTo(Request.java:166)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:37)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=6
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=10
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=11
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=12
+Nov 17, 2026 1:35:18 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=14
+Nov 17, 2026 1:35:19 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=159
+Nov 17, 2026 1:35:19 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=160
+Nov 17, 2026 1:35:19 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=158
+Nov 17, 2026 1:35:19 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=159
+Nov 17, 2026 1:35:19 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=157
+Nov 17, 2026 1:35:19 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 17, 2026 1:35:21 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 1
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:21 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=2 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:21 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=2
+Nov 17, 2026 1:35:21 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 2
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:21 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=3 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:35:21 AM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 17, 2026 1:35:22 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 17, 2026 1:35:22 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 17, 2026 1:41:19 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 17, 2026 1:41:19 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 17, 2026 1:41:19 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 17, 2026 1:41:19 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 17, 2026 1:41:19 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 17, 2026 1:41:23 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:41:23 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 17, 2026 1:41:23 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 1:41:23 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 1
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:23 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:23 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:41:23 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 17, 2026 1:41:24 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=1
+Nov 17, 2026 1:41:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=0
+Nov 17, 2026 1:41:24 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=1
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=2 pool_size=1 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 2
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$2.write(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.implWrite(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.write(Unknown Source)
+	at java.base/java.io.OutputStream.write(Unknown Source)
+	at Gateway.protocol.Request.writeTo(Request.java:166)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:37)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=4 pool_size=3 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=3 pool_size=2 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=5 pool_size=4 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=6 pool_size=5 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 17, 2026 1:41:26 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=4
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=4
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=3
+Nov 17, 2026 1:41:26 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implWrite(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.write(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$2.write(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.implWrite(Unknown Source)
+	at java.base/java.net.Socket$SocketOutputStream.write(Unknown Source)
+	at java.base/java.io.OutputStream.write(Unknown Source)
+	at Gateway.protocol.Request.writeTo(Request.java:166)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:37)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=7
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=9
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=9
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=8
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=9
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=11
+Nov 17, 2026 1:41:26 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=11
+Nov 17, 2026 1:41:27 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 17, 2026 1:41:29 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 1
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:29 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=2 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:29 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=2
+Nov 17, 2026 1:41:29 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_CONNECTION_ERROR backend=Server 2
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:29 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=3 max_attempts=3
+java.net.SocketException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.implRead(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read1(Unknown Source)
+	at java.base/java.io.BufferedInputStream.read(Unknown Source)
+	at java.base/java.io.FilterInputStream.read(Unknown Source)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:48)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 1:41:29 AM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 17, 2026 1:41:30 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 17, 2026 1:41:30 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 17, 2026 1:59:10 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 17, 2026 1:59:10 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 17, 2026 1:59:10 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 17, 2026 1:59:10 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 17, 2026 1:59:10 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 17, 2026 1:59:21 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:59:21 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 17, 2026 1:59:21 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 1:59:21 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 17, 2026 1:59:22 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 1:59:22 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=6
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=6
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=7
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=8
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=10
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=10
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=10
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=14
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=14
+Nov 17, 2026 1:59:24 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=12
+Nov 17, 2026 2:02:49 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 1 host=localhost port=8086
+Nov 17, 2026 2:02:49 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 2 host=localhost port=8087
+Nov 17, 2026 2:02:49 AM Gateway.GatewayServer start
+INFO: event=BACKEND_CONFIGURED backend=Server 3 host=localhost port=5003
+Nov 17, 2026 2:02:49 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005 algorithm=AdaptiveLoadBalancer
+Nov 17, 2026 2:02:50 AM Gateway.GatewayServer start
+INFO: event=GATEWAY_STARTED gateway_port=5000 dashboard_port=5005
+Nov 17, 2026 2:02:55 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 2:02:55 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=7
+Nov 17, 2026 2:02:55 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 2:02:55 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 17, 2026 2:02:56 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 2:02:56 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=1 pool_size=1 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=3 pool_size=3 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=2 pool_size=2 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=2
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 1 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=4 pool_size=4 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=3
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 2 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=3
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=4
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=8
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=1
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool createConnection
+INFO: event=BACKEND_CONNECTION_CREATED backend=Server 3 connection_id=5 pool_size=5 max_connections=5
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=2
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 3 connection_id=1
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=4
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=12
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 1 connection_id=3
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 3 connection_id=3
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=13
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 3 connection_id=2
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=6
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=12
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=4
+Nov 17, 2026 2:02:58 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 2 connection_id=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=8
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 2 latency_ms=2
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=7
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=6
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=19
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=5
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=10
+Nov 17, 2026 2:02:58 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 1 latency_ms=10
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 1
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 2
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 2 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 1
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 2
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 2 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+WARNING: event=BACKEND_TIMEOUT backend=Server 3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 3 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 3 connection_id=1
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 1 attempt=1 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 1 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 2 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.connection.BackendConnectionPool$BackendPool acquire
+INFO: event=BACKEND_CONNECTION_REUSED backend=Server 3 connection_id=2
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 2 attempt=1 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 2 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=BACKEND_RETRY backend=Server 3 attempt=1 max_attempts=3
+java.net.SocketTimeoutException: Timed out waiting for a connection permit from Server 3 (limit=5)
+	at Gateway.connection.BackendConnectionPool$BackendPool.acquire(BackendConnectionPool.java:178)
+	at Gateway.connection.BackendConnectionPool.acquire(BackendConnectionPool.java:69)
+	at Gateway.forwarding.RequestForwarder.forward(RequestForwarder.java:31)
+	at Gateway.handler.ClientHandler.run(ClientHandler.java:54)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=2
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=2
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=2
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=NO_BACKEND_AVAILABLE attempt=2
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 17, 2026 2:03:01 AM Gateway.handler.ClientHandler run
+WARNING: event=REQUEST_FAILED status=503
+Nov 17, 2026 2:03:01 AM Gateway.forwarding.RequestForwarder forward
+INFO: event=REQUEST_COMPLETED backend=Server 3 latency_ms=3
+Nov 17, 2026 2:03:01 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 1 state=UP
+Nov 17, 2026 2:03:01 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 2 state=UP
+Nov 17, 2026 2:03:01 AM Gateway.monitoring.HealthMonitor checkAllServers
+INFO: event=BACKEND_STATE_CHANGED backend=Server 3 state=UP
