@@ -46,68 +46,79 @@ public class HealthMonitor {
         }
     }
 
+    // private boolean checkServer(BackendServer server) {
+    //     long start = System.nanoTime();
+
+    //     try (Socket socket = new Socket()) {
+    //         socket.connect(new InetSocketAddress(
+    //                 server.getHost(), server.getPort()), 1000);
+    //         socket.setSoTimeout(1000);
+
+    //         OutputStream writer = socket.getOutputStream();
+    //         InputStream reader = socket.getInputStream();
+
+    //         String request = "GET /metrics HTTP/1.1\r\n"
+    //                 + "Host: " + server.getHost() + "\r\n"
+    //                 + "Connection: close\r\n\r\n";
+
+    //         writer.write(request.getBytes(StandardCharsets.UTF_8));
+    //         writer.flush();
+
+    //         String statusLine = readHttpLine(reader);
+    //         if (statusLine == null || !statusLine.contains(" 200 ")) {
+    //             return false;
+    //         }
+
+    //         int contentLength = -1;
+
+    //         while (true) {
+    //             String header = readHttpLine(reader);
+    //             if (header == null || header.isEmpty()) break;
+
+    //             if (header.toLowerCase().startsWith("content-length:")) {
+    //                 contentLength = Integer.parseInt(
+    //                         header.substring(header.indexOf(':') + 1).trim());
+    //             }
+    //         }
+
+    //         if (contentLength < 0) return false;
+
+    //         byte[] bodyBytes = reader.readNBytes(contentLength);
+    //         if (bodyBytes.length != contentLength) return false;
+
+    //         String body = new String(bodyBytes, StandardCharsets.UTF_8);
+
+    //         Matcher matcher = Pattern
+    //                 .compile("\"cpu\":([0-9.]+),\"ram\":([0-9.]+)")
+    //                 .matcher(body);
+
+    //         if (!matcher.find()) return false;
+
+    //         double cpu = Double.parseDouble(matcher.group(1));
+    //         double ram = Double.parseDouble(matcher.group(2));
+    //         double latencyMs = (System.nanoTime() - start) / 1_000_000.0;
+
+    //         ServerMetrics metrics = new ServerMetrics();
+
+    //         // Chưa cập nhật metrics vì cần xác nhận API của ServerMetrics
+    //         // và BackendServer.
+
+    //         return true;
+
+    //     } catch (Exception e) {
+    //         System.out.println("Không kiểm tra được "
+    //                 + server.getName() + ": " + e.getMessage());
+    //         return false;
+    //     }
+    // }
+
     private boolean checkServer(BackendServer server) {
-        long start = System.nanoTime();
-
+        // Chỉ cần kết nối được tới Port của Tomcat là xác nhận Server đang UP (Sống)
         try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress(
-                    server.getHost(), server.getPort()), 1000);
-            socket.setSoTimeout(1000);
-
-            OutputStream writer = socket.getOutputStream();
-            InputStream reader = socket.getInputStream();
-
-            String request = "GET /metrics HTTP/1.1\r\n"
-                    + "Host: " + server.getHost() + "\r\n"
-                    + "Connection: close\r\n\r\n";
-
-            writer.write(request.getBytes(StandardCharsets.UTF_8));
-            writer.flush();
-
-            String statusLine = readHttpLine(reader);
-            if (statusLine == null || !statusLine.contains(" 200 ")) {
-                return false;
-            }
-
-            int contentLength = -1;
-
-            while (true) {
-                String header = readHttpLine(reader);
-                if (header == null || header.isEmpty()) break;
-
-                if (header.toLowerCase().startsWith("content-length:")) {
-                    contentLength = Integer.parseInt(
-                            header.substring(header.indexOf(':') + 1).trim());
-                }
-            }
-
-            if (contentLength < 0) return false;
-
-            byte[] bodyBytes = reader.readNBytes(contentLength);
-            if (bodyBytes.length != contentLength) return false;
-
-            String body = new String(bodyBytes, StandardCharsets.UTF_8);
-
-            Matcher matcher = Pattern
-                    .compile("\"cpu\":([0-9.]+),\"ram\":([0-9.]+)")
-                    .matcher(body);
-
-            if (!matcher.find()) return false;
-
-            double cpu = Double.parseDouble(matcher.group(1));
-            double ram = Double.parseDouble(matcher.group(2));
-            double latencyMs = (System.nanoTime() - start) / 1_000_000.0;
-
-            ServerMetrics metrics = new ServerMetrics();
-
-            // Chưa cập nhật metrics vì cần xác nhận API của ServerMetrics
-            // và BackendServer.
-
+            socket.connect(new InetSocketAddress(server.getHost(), server.getPort()), 1000);
             return true;
-
         } catch (Exception e) {
-            System.out.println("Không kiểm tra được "
-                    + server.getName() + ": " + e.getMessage());
+            // Không kết nối được tới port -> Server DOWN
             return false;
         }
     }

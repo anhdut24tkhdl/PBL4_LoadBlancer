@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import Gateway.utils.AppLogger;
 
@@ -63,17 +64,22 @@ public class ClientHandler implements Runnable {
                     break;
 
                 } catch (RequestForwarder.ClientWriteException e) {
-                    // The client disconnected or rejected the response; do not mark backend DOWN or retry.
                     AppLogger.LOGGER.info("event=CLIENT_DISCONNECTED backend=" + backend.getName());
                     clientWriteFailed = true;
                     break;
+                } catch (SocketTimeoutException e) {
+                    // CHỈ LÀ TIMEOUT (Quá tải tạm thời hoặc Tomcat phản hồi chậm)
+                    // KHÔNG setAlive(false), chỉ ghi log và thử lại server khác
+                    AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
+                            "event=BACKEND_TIMEOUT_OR_BUSY backend=" + backend.getName()
+                                    + " attempt=" + (i + 1), e);
                 } catch (IOException e) {
+                    // LỖI MẠNG THẬT SỰ (Ví dụ: Connection refused, Server sập hoàn toàn)
                     backend.setAlive(false);
                     AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
                             "event=BACKEND_RETRY backend=" + backend.getName()
                                     + " attempt=" + (i + 1)
                                     + " max_attempts=" + (maxRetries + 1), e);
-
                 } finally {
                     backend.decreaseConnections();
                 }

@@ -141,7 +141,7 @@ public class Request {
         headers.put("Content-Length", String.valueOf(body.length));
 
         // Bản Gateway hiện tại: đóng kết nối sau một request/response
-        headers.put("Connection", "close");
+        headers.put("Connection", "keep-alive");
 
         // 1. Tạo request line + headers (phần text)
         StringBuilder headerText = new StringBuilder();
@@ -169,5 +169,10 @@ public class Request {
         out.write(body);
 
         out.flush();
+
+        
+    }
+    public Map<String, String> getHeaders() {
+        return headers;
     }
 }

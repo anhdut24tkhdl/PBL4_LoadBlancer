@@ -1,6 +1,7 @@
 package Gateway;
 
 import Gateway.api.DashboardApiServer;
+import Gateway.connection.BackendConnectionPool;
 import Gateway.forwarding.RequestForwarder;
 import Gateway.handler.ClientHandler;
 import Gateway.loadbalancer.DynamicLoadBalancer;
@@ -70,7 +71,9 @@ public class GatewayServer {
         }
 
         LoadBalancer loadBalancer = createLoadBalancer(algorithm, registry);
-        RequestForwarder forwarder = new RequestForwarder();
+        // Khởi tạo Connection Pool cho danh sách server từ registry
+        BackendConnectionPool connectionPool = new BackendConnectionPool(registry.getServers());
+        RequestForwarder forwarder = new RequestForwarder(connectionPool);
         HealthMonitor healthMonitor = new HealthMonitor(registry);
         healthMonitor.start(monitorPool);
 

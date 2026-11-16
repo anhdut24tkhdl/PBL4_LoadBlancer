@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public final class BackendConnectionPool implements AutoCloseable {
     public static final int DEFAULT_MAX_CONNECTIONS_PER_BACKEND = 5;
     public static final int DEFAULT_CONNECT_TIMEOUT_MS = 3000;
-    public static final int DEFAULT_ACQUIRE_TIMEOUT_MS = 3000;
+    public static final int DEFAULT_ACQUIRE_TIMEOUT_MS = 5000;
     public static final int DEFAULT_IDLE_TIMEOUT_MS = 30000;
     public static final int DEFAULT_READ_TIMEOUT_MS = 10000;
 
@@ -156,39 +156,44 @@ public final class BackendConnectionPool implements AutoCloseable {
         private PooledConnection acquire() throws IOException {
             if (poolClosed || closed) throw new IOException("Pool is closed for " + backend.getName());
 
+            // BƯỚC 1: KIỂM TRA IDLE QUEUE TRƯỚC
+            PooledConnection connection;
+            while ((connection = idle.poll()) != null) {
+                long idleMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - connection.lastUsedNanos);
+                if (connection.isUsable() && idleMs <= idleTimeoutMs) {
+                    AppLogger.LOGGER.info("event=BACKEND_CONNECTION_REUSED backend="
+                            + backend.getName() + " connection_id=" + connection.id);
+                    // Có kết nối sẵn: Lấy ra dùng ngay, KHÔNG CẦN xin permit từ Semaphore!
+                    return connection;
+                }
+                // Kết nối cũ hỏng hoặc hết hạn -> loại bỏ và hoàn trả permit để tạo socket khác sau này
+                discard(connection);
+                slots.release();
+            }
+            // BƯỚC 2: QUEUE TRỐNG -> THỬ LẤY PERMIT TỪ SEMAPHORE
+            boolean acquiredPermit = false;
             try {
-                if (!slots.tryAcquire(acquireTimeoutMs, TimeUnit.MILLISECONDS)) {
-                    throw new SocketTimeoutException("Timed out waiting for a connection from "
+                acquiredPermit = slots.tryAcquire(acquireTimeoutMs, TimeUnit.MILLISECONDS);
+                if (!acquiredPermit) {
+                    throw new SocketTimeoutException("Timed out waiting for a connection permit from "
                             + backend.getName() + " (limit=" + maxConnections + ")");
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                throw new IOException("Interrupted while waiting for backend connection", e);
+                throw new IOException("Interrupted while waiting for backend connection permit", e);
             }
-
+            // BƯỚC 3: ĐÃ CÓ PERMIT -> TIẾN HÀNH TẠO SOCKET MỚI
             try {
-                if (poolClosed || closed) throw new IOException("Pool is closed for " + backend.getName());
-
-                PooledConnection connection;
-                while ((connection = idle.poll()) != null) {
-                    long idleMs = TimeUnit.NANOSECONDS.toMillis(
-                            System.nanoTime() - connection.lastUsedNanos);
-                    if (connection.isUsable() && idleMs <= idleTimeoutMs) {
-                        AppLogger.LOGGER.info("event=BACKEND_CONNECTION_REUSED backend="
-                                + backend.getName() + " connection_id=" + connection.id);
-                        return connection;
-                    }
-
-                    discard(connection);
-                    // The stale idle connection owned one slot; release that slot.
-                    slots.release();
+                if (poolClosed || closed) {
+                    throw new IOException("Pool is closed for " + backend.getName());
                 }
-
                 return createConnection();
             } catch (IOException | RuntimeException e) {
+                // Tạo kết nối thất bại -> hoàn trả permit ngay để không bị rò rỉ (leak) slot
                 slots.release();
                 throw e;
             }
+
         }
 
         private PooledConnection createConnection() throws IOException {
@@ -235,6 +240,7 @@ public final class BackendConnectionPool implements AutoCloseable {
 
         private void invalidate(PooledConnection connection) {
             discard(connection);
+            // Socket bị lỗi/hủy -> hoàn trả slot để hệ thống có thể tạo socket mới
             slots.release();
         }
 
