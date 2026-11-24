@@ -1,0 +1,14 @@
+# Khóa riêng, chứng chỉ và keystore dùng trên từng máy
+*.pem
+*.p12
+*.pfx
+*.jks
+.env
+
+# Kết quả biên dịch Java
+*.class
+bin/
+build/
+
+# Log khi chạy
+logs/

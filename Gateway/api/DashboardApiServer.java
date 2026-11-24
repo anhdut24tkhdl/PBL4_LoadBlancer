@@ -25,7 +25,7 @@ public class DashboardApiServer {
 
     public void start() throws IOException {
         httpServer = HttpServer.create(
-                new InetSocketAddress(this.dashboardPort),
+                new InetSocketAddress("127.0.0.1", this.dashboardPort),
                 0);
 
         httpServer.createContext(
@@ -97,6 +97,10 @@ public class DashboardApiServer {
 
                     .append("\"connections\":")
                     .append(server.getActiveConnections())
+                    .append(",")
+
+                    .append("\"totalRequests\":")
+                    .append(server.getTotalRequests())
 
                     .append("}");
 
