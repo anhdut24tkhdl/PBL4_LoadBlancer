@@ -11,41 +11,35 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class WeightedLeastConnectionLoadBalancer implements LoadBalancer {
 
     private final ServerRegistry registry;
-    private final AtomicInteger tieBreaker = new AtomicInteger(0);
-
-    private static final double EPSILON = 1e-9;
+    private long tieBreaker;
 
     public WeightedLeastConnectionLoadBalancer(ServerRegistry registry) {
         this.registry = registry;
     }
 
-    private double calculateScore(BackendServer server) {
-        return (double) server.getActiveConnections()
-                / server.getWeight();
-    }
-
     private BackendServer findBestServer() {
-
         List<BackendServer> candidates = new ArrayList<>();
-
-        double minScore = Double.MAX_VALUE;
+        int bestConnections = 0;
+        int bestWeight = 1;
 
         for (BackendServer server : registry.getServers()) {
-
             if (!server.isAlive()) {
                 continue;
             }
 
-            double score = calculateScore(server);
+            int connections = server.getActiveConnections();
+            int weight = server.getWeight();
 
-            if (score < minScore - EPSILON) {
+            // So sánh connections / weight với bestConnections / bestWeight.
+            long left = (long) connections * bestWeight;
+            long right = (long) bestConnections * weight;
 
-                minScore = score;
+            if (candidates.isEmpty() || left < right) {
                 candidates.clear();
                 candidates.add(server);
-
-            } else if (Math.abs(score - minScore) < EPSILON) {
-
+                bestConnections = connections;
+                bestWeight = weight;
+            } else if (left == right) {
                 candidates.add(server);
             }
         }
@@ -53,18 +47,28 @@ public class WeightedLeastConnectionLoadBalancer implements LoadBalancer {
         if (candidates.isEmpty()) {
             return null;
         }
+        if (candidates.size() == 1) {
+            return candidates.get(0);
+        }
 
-        // Phá hòa bằng Round Robin
-        int index = Math.floorMod(
-                tieBreaker.getAndIncrement(),
-                candidates.size()
-        );
+        long totalWeight = 0;
+        for (BackendServer server : candidates) {
+            totalWeight += server.getWeight();
+        }
 
-        return candidates.get(index);
+        long ticket = Math.floorMod(tieBreaker++, totalWeight);
+        for (BackendServer server : candidates) {
+            if (ticket < server.getWeight()) {
+                return server;
+            }
+            ticket -= server.getWeight();
+        }
+
+        throw new IllegalStateException("Weighted selection failed");
     }
 
     @Override
-    public BackendServer selectServer() {
+    public synchronized BackendServer selectServer() {
         return findBestServer();
     }
 

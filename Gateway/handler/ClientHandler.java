@@ -1,3 +1,4 @@
+
 package Gateway.handler;
 
 import Gateway.forwarding.RequestForwarder;
@@ -7,19 +8,25 @@ import Gateway.protocol.Request;
 import Gateway.utils.AppLogger;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
-import Gateway.utils.AppLogger;
+import java.util.logging.Level;
 
 public class ClientHandler implements Runnable {
+
     private final Socket clientSocket;
     private final LoadBalancer loadBalancer;
     private final RequestForwarder forwarder;
 
-    public ClientHandler(Socket clientSocket, LoadBalancer loadBalancer, RequestForwarder forwarder) {
+    private static final int MAX_GET_ATTEMPTS = 3;
+
+    public ClientHandler(
+            Socket clientSocket,
+            LoadBalancer loadBalancer,
+            RequestForwarder forwarder) {
+
         this.clientSocket = clientSocket;
         this.loadBalancer = loadBalancer;
         this.forwarder = forwarder;
@@ -27,92 +34,262 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        try (
-            Socket client = clientSocket;
-            InputStream clientIn = client.getInputStream();
-            OutputStream clientOut = client.getOutputStream()) {
 
+        try (Socket client = clientSocket) {
 
-            // Không dùng readAllBytes()
-            Request request = Request.readRequest(client);
-            int maxRetries = 2;
+            // Giới hạn thời gian client gửi HTTP request
+            client.setSoTimeout(15000);
+
+            OutputStream clientOut = client.getOutputStream();
+
+            Request request;
+
+            try {
+
+                request = Request.readRequest(client);
+
+            } catch (Request.HttpRequestException e) {
+
+                // Request không hợp lệ: trả status tương ứng
+                AppLogger.LOGGER.warning(
+                        "event=INVALID_HTTP_REQUEST"
+                        + " status=" + e.getStatusCode()
+                        + " reason=" + e.getMessage()
+                );
+
+                sendErrorResponse(
+                        clientOut,
+                        e.getStatusCode(),
+                        false
+                );
+
+                return;
+
+            } catch (SocketTimeoutException e) {
+
+                sendErrorResponse(clientOut, 408, false);
+                return;
+            }
+
+            // Chỉ retry các phương thức đọc an toàn
+            boolean canRetry = isRetryable(request.getMethod());
+
+            // POST, PUT, PATCH, DELETE chỉ thực hiện 1 lần
+            int maxAttempts = canRetry ? MAX_GET_ATTEMPTS : 1;
 
             boolean completed = false;
+            boolean responseStarted = false;
             boolean clientWriteFailed = false;
 
+            int failureStatus = 503;
 
-            for (int i = 0; i <= maxRetries; i++) {
-                BackendServer backend = loadBalancer.selectServerForRequest();
-                if (backend == null){
-                    AppLogger.LOGGER.warning("event=NO_BACKEND_AVAILABLE attempt=" + (i + 1));
+            for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+
+                BackendServer backend =
+                        loadBalancer.selectServerForRequest();
+
+                if (backend == null) {
+                    AppLogger.LOGGER.warning(
+                            "event=NO_BACKEND_AVAILABLE"
+                            + " attempt=" + attempt
+                    );
                     break;
                 }
 
                 try {
 
-                    // Chỉ khi forward() hoàn thành
-                    // thì client mới nhận response
-                    forwarder.forward(
-                            backend,
-                            request,
-                            clientOut);
+                    forwarder.forward(backend, request, clientOut);
 
-                    // Thành công
+                    // Đã chuyển tiếp toàn bộ response thành công
+                    completed = true;
+                    break;
 
-                    completed=true;
+                } catch (RequestForwarder.ResponseStartedException e) {
+
+                    // Đã gửi response headers hoặc body cho client.
+                    // KHÔNG retry, KHÔNG ghi thêm response HTTP khác.
+                    responseStarted = true;
+
+                    AppLogger.LOGGER.log(
+                            Level.WARNING,
+                            "event=PARTIAL_RESPONSE"
+                            + " backend=" + backend.getName()
+                            + " retry=false",
+                            e
+                    );
 
                     break;
 
                 } catch (RequestForwarder.ClientWriteException e) {
-                    AppLogger.LOGGER.info("event=CLIENT_DISCONNECTED backend=" + backend.getName());
+
+                    // Client ngắt kết nối hoặc không nhận dữ liệu.
+                    // Retry lúc này không có ý nghĩa.
                     clientWriteFailed = true;
+
+                    AppLogger.LOGGER.info(
+                            "event=CLIENT_DISCONNECTED"
+                            + " backend=" + backend.getName()
+                    );
+
                     break;
+
                 } catch (SocketTimeoutException e) {
-                    // CHỈ LÀ TIMEOUT (Quá tải tạm thời hoặc Tomcat phản hồi chậm)
-                    // KHÔNG setAlive(false), chỉ ghi log và thử lại server khác
-                    AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
-                            "event=BACKEND_TIMEOUT_OR_BUSY backend=" + backend.getName()
-                                    + " attempt=" + (i + 1), e);
+
+                    // Chưa gửi response nào cho client.
+                    // Chỉ retry nếu method được phép.
+                    failureStatus = 504;
+
+                    AppLogger.LOGGER.log(
+                            Level.WARNING,
+                            "event=BACKEND_TIMEOUT"
+                            + " backend=" + backend.getName()
+                            + " method=" + request.getMethod()
+                            + " attempt=" + attempt
+                            + " retry=" + (canRetry && attempt < maxAttempts),
+                            e
+                    );
+
+                    if (!canRetry) {
+                        break;
+                    }
+
                 } catch (IOException e) {
-                    // LỖI MẠNG THẬT SỰ (Ví dụ: Connection refused, Server sập hoàn toàn)
-                    backend.setAlive(false);
-                    AppLogger.LOGGER.log(java.util.logging.Level.WARNING,
-                            "event=BACKEND_RETRY backend=" + backend.getName()
-                                    + " attempt=" + (i + 1)
-                                    + " max_attempts=" + (maxRetries + 1), e);
+
+                    // Lỗi backend khi chưa bắt đầu trả response.
+                    failureStatus = 502;
+
+                    AppLogger.LOGGER.log(
+                            Level.WARNING,
+                            "event=BACKEND_ERROR"
+                            + " backend=" + backend.getName()
+                            + " method=" + request.getMethod()
+                            + " attempt=" + attempt
+                            + " retry=" + (canRetry && attempt < maxAttempts),
+                            e
+                    );
+
+                    // Không đánh dấu DOWN với mọi IOException.
+                    // HealthMonitor sẽ kiểm tra trạng thái server.
+                    if (!canRetry) {
+                        break;
+                    }
+
                 } finally {
+
+                    // Hoàn trả số lượng request đang xử lý
                     backend.decreaseConnections();
                 }
-            }    
-            if (!completed && !clientWriteFailed && !client.isClosed()) {
-                sendServiceUnavailable(clientOut);
-                // Ghi log cảnh báo khi request không thành công
-                AppLogger.LOGGER.warning("event=REQUEST_FAILED status=503");
             }
 
+            // Chỉ được gửi response lỗi khi chưa gửi response nào.
+            if (!completed && !responseStarted && !clientWriteFailed) {
+                sendErrorResponse(
+                        clientOut,
+                        failureStatus,
+                        "HEAD".equalsIgnoreCase(request.getMethod())
+                );
+            }
+
+            // try-with-resources sẽ đóng socket client.
         } catch (Exception e) {
-            // Ghi log lỗi khi có exception xảy ra
-            System.out.println("Lỗi xử lý client: " + e.getMessage());
-            AppLogger.LOGGER.log(java.util.logging.Level.WARNING, "event=CLIENT_HANDLER_ERROR", e);
+
+            AppLogger.LOGGER.log(
+                    Level.WARNING,
+                    "event=CLIENT_HANDLER_ERROR",
+                    e
+            );
         }
     }
 
+    // Chính sách retry bảo thủ cho website thi trực tuyến
+    private boolean isRetryable(String method) {
 
-    private void sendServiceUnavailable(OutputStream out) throws java.io.IOException {
-        byte[] body = "Service Unavailable".getBytes(
-                java.nio.charset.StandardCharsets.UTF_8);
+        return "GET".equalsIgnoreCase(method)
+                || "HEAD".equalsIgnoreCase(method);
+    }
 
-        String headers = "HTTP/1.1 503 Service Unavailable\r\n"
-                + "Content-Type: text/plain; charset=UTF-8\r\n"
-                + "Content-Length: " + body.length + "\r\n"
-                + "Connection: close\r\n\r\n";
+    private void sendErrorResponse(
+        OutputStream out,
+        int statusCode,
+        boolean headRequest) {
+
+        String statusText;
+
+        switch (statusCode) {
+
+            case 400:
+                statusText = "Bad Request";
+                break;
+
+            case 408:
+                statusText = "Request Timeout";
+                break;
+
+            case 413:
+                statusText = "Content Too Large";
+                break;
+
+            case 414:
+                statusText = "URI Too Long";
+                break;
+
+            case 417:
+                statusText = "Expectation Failed";
+                break;
+
+            case 431:
+                statusText = "Request Header Fields Too Large";
+                break;
+
+            case 501:
+                statusText = "Not Implemented";
+                break;
+
+            case 505:
+                statusText = "HTTP Version Not Supported";
+                break;
+
+            case 502:
+                statusText = "Bad Gateway";
+                break;
+
+            case 504:
+                statusText = "Gateway Timeout";
+                break;
+
+            default:
+                statusCode = 503;
+                statusText = "Service Unavailable";
+                break;
+        }
 
         try {
+
+            byte[] body = statusText.getBytes(
+                    StandardCharsets.UTF_8
+            );
+
+            String headers =
+                    "HTTP/1.1 " + statusCode + " " + statusText + "\r\n"
+                    + "Content-Type: text/plain; charset=UTF-8\r\n"
+                    + "Content-Length: " + body.length + "\r\n"
+                    + "Connection: close\r\n"
+                    + "\r\n";
+
             out.write(headers.getBytes(StandardCharsets.US_ASCII));
-            out.write(body);
+
+            if (!headRequest) {
+                out.write(body);
+            }
+
             out.flush();
+
         } catch (IOException e) {
-            AppLogger.LOGGER.fine("event=CLIENT_503_WRITE_FAILED message=" + e.getMessage());
+
+            AppLogger.LOGGER.fine(
+                    "event=ERROR_RESPONSE_WRITE_FAILED"
+                    + " reason=" + e.getMessage()
+            );
         }
     }
 }

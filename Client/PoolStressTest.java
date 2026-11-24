@@ -47,7 +47,7 @@ public class PoolStressTest {
     }
 
     private static void sendSingleRequest(int id) {
-        try (Socket socket = new Socket(GATEWAY_HOST, GATEWAY_PORT);
+        try (Socket socket = GatewayTLS.connect(GATEWAY_HOST, GATEWAY_PORT);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 

@@ -30,7 +30,10 @@ public class RoundRobinLoadBalancer implements LoadBalancer {
         }
 
         // Lấy chỉ số tiếp theo và dùng modulo số lượng server đang alive
-        int index = Math.abs(counter.getAndIncrement() % aliveServers.size());
+        int index = Math.floorMod(
+                counter.getAndIncrement(),
+                aliveServers.size()
+        );
         return aliveServers.get(index);
     }
 }

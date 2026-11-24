@@ -6,10 +6,12 @@ import Gateway.forwarding.RequestForwarder;
 import Gateway.handler.ClientHandler;
 import Gateway.loadbalancer.DynamicLoadBalancer;
 import Gateway.loadbalancer.LoadBalancer;
+import Gateway.loadbalancer.PeakEWMALoadBalancer;
 import Gateway.loadbalancer.LeastConnectionLoadBalancer;
 import Gateway.loadbalancer.WeightedLeastConnectionLoadBalancer;
 import Gateway.loadbalancer.RoundRobinLoadBalancer;
 import Gateway.loadbalancer.AdaptiveLoadBalancer;
+import Gateway.loadbalancer.PeakEWMALoadBalancer;
 import Gateway.model.BackendServer;
 import Gateway.monitoring.HealthMonitor;
 import Gateway.registry.ServerRegistry;
@@ -27,9 +29,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import Gateway.utils.AppLogger;
+import Gateway.utils.SSLContextHelper;
 
 
 public class GatewayServer {
+    
     private final ConfigLoader config = new ConfigLoader();
     private final int gatewayPort;
     private final int dashboardPort;
@@ -74,7 +78,16 @@ public class GatewayServer {
         // Khởi tạo Connection Pool cho danh sách server từ registry
         BackendConnectionPool connectionPool = new BackendConnectionPool(registry.getServers());
         RequestForwarder forwarder = new RequestForwarder(connectionPool);
-        HealthMonitor healthMonitor = new HealthMonitor(registry);
+        String metricsPath = config.getString(
+                "backend.metrics.path",
+                "/OnlineExam/api/metrics?cmd=METRICS"
+        );
+
+        HealthMonitor healthMonitor = new HealthMonitor(
+                registry,
+                metricsPath
+        );
+
         healthMonitor.start(monitorPool);
 
         DashboardApiServer dashboardApi = new DashboardApiServer(registry, dashboardPort);
@@ -84,32 +97,52 @@ public class GatewayServer {
             e.printStackTrace();
         }
 
-        try (ServerSocket serverSocket = new ServerSocket(gatewayPort)) {
-            AppLogger.LOGGER.info("event=GATEWAY_STARTED gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort
-                    + " algorithm=" + loadBalancer.getClass().getSimpleName());
-            AppLogger.LOGGER.info("event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
-            System.out.println("=================================================");
-            System.out.println("   Gateway đang chạy tại port " + gatewayPort);
-            System.out.println("   Thuật toán: " + loadBalancer.getClass().getSimpleName());
-            System.out.println("   Dashboard API tại: http://localhost:" + dashboardPort + "/api/servers");
-            System.out.println("=================================================");
+        // Khởi tạo SSL Server Socket lắng nghe kết nối HTTPS từ Client
+        try{
+            String keystorePath = System.getenv("GATEWAY_TLS_KEYSTORE");
+            String keystorePassword = System.getenv("GATEWAY_TLS_PASSWORD");
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                try {
-                    requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
-                } catch (RejectedExecutionException e) {
-                    rejectClient(clientSocket);
-                    AppLogger.LOGGER.warning(
-                        "event=GATEWAY_OVERLOADED"
-                        + " reason=THREAD_POOL_FULL"
-                        + " active_workers=" + requestPool.getActiveCount()
-                        + " queue_size=" + requestPool.getQueue().size()
-                        + " queue_capacity=" + (requestPool.getQueue().size()
-                        + requestPool.getQueue().remainingCapacity())
-                    );
-                }
+            if (keystorePath == null || keystorePath.isBlank()
+                    || keystorePassword == null || keystorePassword.isBlank()) {
+                throw new IllegalStateException(
+                        "Thiếu GATEWAY_TLS_KEYSTORE hoặc GATEWAY_TLS_PASSWORD"
+                );
             }
+
+            javax.net.ssl.SSLServerSocketFactory sslFactory =
+                    SSLContextHelper.createSSLServerSocketFactory(
+                            keystorePath, keystorePassword
+                    );
+
+            try (ServerSocket serverSocket = sslFactory.createServerSocket(
+                    gatewayPort, 50,
+                    java.net.InetAddress.getByName("127.0.0.1"))) {
+                AppLogger.LOGGER.info("event=GATEWAY_STARTED gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort
+                        + " algorithm=" + loadBalancer.getClass().getSimpleName());
+                AppLogger.LOGGER.info("event=GATEWAY_STARTED" + " gateway_port=" + gatewayPort + " dashboard_port=" + dashboardPort);
+                System.out.println("=================================================");
+                System.out.println("   Gateway đang chạy tại port " + gatewayPort);
+                System.out.println("   Thuật toán: " + loadBalancer.getClass().getSimpleName());
+                System.out.println("   Dashboard API tại: http://localhost:" + dashboardPort + "/api/servers");
+                System.out.println("=================================================");
+
+                while (true) {
+                    Socket clientSocket = serverSocket.accept();
+                    try {
+                        requestPool.execute(new ClientHandler(clientSocket, loadBalancer, forwarder));
+                    } catch (RejectedExecutionException e) {
+                        rejectClient(clientSocket);
+                        AppLogger.LOGGER.warning(
+                            "event=GATEWAY_OVERLOADED"
+                            + " reason=THREAD_POOL_FULL"
+                            + " active_workers=" + requestPool.getActiveCount()
+                            + " queue_size=" + requestPool.getQueue().size()
+                            + " queue_capacity=" + (requestPool.getQueue().size()
+                            + requestPool.getQueue().remainingCapacity())
+                        );
+                    }
+                }
+            } 
         } catch (Exception e) {
             e.printStackTrace();
             // Ghi log lỗi nghiêm trọng khi gateway gặp sự cố
@@ -169,6 +202,10 @@ public class GatewayServer {
             case "alb":
                 System.out.println("[Gateway] Kích hoạt thuật toán: ADAPTIVE (Hysteresis Multi-metrics)");
                 return new AdaptiveLoadBalancer(registry);
+            case "peak_ewma":
+            case "peakewma":
+                System.out.println("[Gateway] Kích hoạt thuật toán: PEAK EWMA");
+                return new PeakEWMALoadBalancer(registry);
             
         }
     }

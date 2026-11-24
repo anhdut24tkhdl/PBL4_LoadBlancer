@@ -1,21 +1,6 @@
-Hướng dẫn chạy và kiểm thử thuật toán Round Robin và Least Connection
-B1: Bien dich toan bo pj: 
-    + javac -d bin -cp . (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })
-B2: Khoi dong 3 server:
-    + java -cp bin Server.BackendServerApp "Server 1" 5001
-    + java -cp bin Server.BackendServerApp "Server 2" 5002
-    + java -cp bin Server.BackendServerApp "Server 3" 5003
-B3: Chạy và test từng thuật toán
-    - Round Robin
-        + Mở terminal mới, khởi động Gatewat với thuật toán Round Robin:
-            java -cp bin Gateway.GatewayServer round_robin
-        + Mở một terminal khác và chạy test Round Robin:
-            java -cp bin Client.AlgorithmTest round_robin
-    - Least Connection
-        + Mở terminal mới, khởi động Gateway với thuật toán Least Connection:
-            java -cp bin Gateway.GatewayServer least_connection
-        + Mở terminal khác và chạy test Least Connection:
-            java -cp bin Client.AlgorithmTest least_connection
-B4: Bắn đồng thời 100 request
-    java -cp bin Client.ParallelStressTest
-        
+“Kiểm thử HTTPS”
+Cách test	            URL mở trên máy của thành viên	                Điều kiện
+Tự chạy Gateway local	https://localhost:5000/OnlineExam/	        Có JDK 21, Tomcat theo config.properties, keystore .p12 của chính họ và hai biến        
+                                                                    GATEWAY_TLS_KEYSTORE, GATEWAY_TLS_PASSWORD.
+Test bản Azure qua SSH	https://localhost:15443/OnlineExam/	        Gateway trên VM đang nghe ở 5443, có SSH tunnel 15443 → 5443 và máy client tin cậy CA đã 
+                                                                    ký chứng chỉ của VM.

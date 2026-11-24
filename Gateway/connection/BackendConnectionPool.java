@@ -156,7 +156,7 @@ public final class BackendConnectionPool implements AutoCloseable {
         private PooledConnection acquire() throws IOException {
             if (poolClosed || closed) throw new IOException("Pool is closed for " + backend.getName());
 
-            // BƯỚC 1: KIỂM TRA IDLE QUEUE TRƯỚC
+            // BƯỚC 1: KIỂM TRA IDLE QUEUE TRƯỚC    
             PooledConnection connection;
             while ((connection = idle.poll()) != null) {
                 long idleMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - connection.lastUsedNanos);

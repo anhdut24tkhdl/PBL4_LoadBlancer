@@ -1,48 +1,99 @@
+
 package Gateway.loadbalancer;
 
 import Gateway.model.BackendServer;
 import Gateway.model.ServerMetrics;
 import Gateway.registry.ServerRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DynamicLoadBalancer implements LoadBalancer {
+
     private final ServerRegistry registry;
+    private static final double EPSILON = 1e-9;
+    private int tieBreaker = 0;
 
     public DynamicLoadBalancer(ServerRegistry registry) {
         this.registry = registry;
     }
 
+    private double safePercent(double value) {
+        if (!Double.isFinite(value) || value < 0) {
+            return 50.0;
+        }
+        return Math.min(100.0, value);
+    }
+
+    private double safeLatency(double value) {
+        if (!Double.isFinite(value) || value < 0) {
+            return 250.0;
+        }
+        return value;
+    }
+
     @Override
-    public BackendServer selectServer() {
-        BackendServer selectedServer = null;
+    public synchronized BackendServer selectServer() {
+
         double lowestScore = Double.MAX_VALUE;
+        List<BackendServer> candidates = new ArrayList<>();
 
         for (BackendServer server : registry.getServers()) {
 
-            if (!server.isAlive()) {
-
+            if (!server.isAlive() || server.getMetrics() == null) {
                 continue;
             }
 
             ServerMetrics metrics = server.getMetrics();
 
-            // Giả định Latency chuẩn tối đa là 1000ms, Connections chuẩn tối đa là 50
-            double normCpu = metrics.getCpuUsage();                     // [0 - 100]
-            double normRam = metrics.getRamUsage();                     // [0 - 100]
-            double normLatency = Math.min(100.0, (metrics.getLatency() / 1000.0) * 100.0);
-            double normConn = Math.min(100.0, (server.getActiveConnections() / 50.0) * 100.0);
+            double normCpu = safePercent(
+                    metrics.getCpuUsage()
+            );
 
-            double score = 0.35 * normCpu 
-                        + 0.30 * normRam 
-                        + 0.20 * normLatency 
-                        + 0.15 * normConn;
+            double normRam = safePercent(
+                    metrics.getRamUsage()
+            );
 
-            if (score < lowestScore) {
+            double normLatency = safeLatency(metrics.getLatency()) / 1000.0 * 100.0;
+            double normConn = server.getActiveConnections() / 50.0 * 100.0;
+
+            double score =
+                    0.35 * normCpu
+                    + 0.30 * normRam
+                    + 0.20 * normLatency
+                    + 0.15 * normConn;
+
+            if (score < lowestScore - EPSILON) {
                 lowestScore = score;
-                selectedServer = server;
+                candidates.clear();
+                candidates.add(server);
 
+            } else if (Math.abs(score - lowestScore) <= EPSILON) {
+                candidates.add(server);
             }
         }
 
-        return selectedServer;
+        if (candidates.isEmpty()) {
+            return null;
+        }
+
+        int index = Math.floorMod(
+                tieBreaker++,
+                candidates.size()
+        );
+
+        return candidates.get(index);
+    }
+
+    @Override
+    public synchronized BackendServer selectServerForRequest() {
+
+        BackendServer server = selectServer();
+
+        if (server != null) {
+            server.increaseConnections();
+        }
+
+        return server;
     }
 }
